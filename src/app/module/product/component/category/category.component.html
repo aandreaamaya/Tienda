@@ -3,43 +3,93 @@
     <!-- Card header -->
 
     <div class="card-header">
-    <div class="row">
-        <div class="col">
-        <h4>Listado de categorías</h4>
-        </div>
-        <div class="col">
-        <button type="button" class="btn btn-primary" style="float: right;">Agregar categoría</button>
-        </div>
-    </div>
+      <div class="row">
+          <div class="col">
+            <h4>Listado de categorías</h4>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-primary" style="float: right;" (click)="showModalForm()">Nueva categoría</button>
+          </div>
+      </div>
     </div>
 
     <!-- Card body -->
 
     <div class="card-body">
+
+        <!-- Category table  -->
+
         <table class="table">
             <thead class="thead-dark">
-                <tr class="table-primary">
-                    <th>Id</th>
-                    <th>Código</th>
-                    <th>Categoría</th>
-                    <th>Estatus</th>
-                </tr>
+              <tr class="table-primary">
+                  <th>Id</th>
+                  <th>Código</th>
+                  <th>Categoría</th>
+                  <th>Estatus</th>
+              </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let category of categories; let i = index"> -->
-                
                 @for(category of categories; track category; let i = $index ) {
-
                     <tr>
                         <td>{{ i + 1 }}</td>
                         <td>{{ category.code }}</td>
                         <td>{{ category.category }}</td>
                         <td>{{ category.status == 1? "Activo": "Inactivo" }}</td>
                     </tr>
-                    
                 }
-                
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Modal form  -->
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="modalForm">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Categoría</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <!-- Category form  -->
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <!-- Code  -->
+
+                <div class="mb-3">
+                  <label for="code" class="form-label">Código</label>
+                  <input type="text" class="form-control" formControlName="code" placeholder="Código de la categoría"
+                    [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}" >
+
+                  @if (form.controls['code'].errors && submitted) {
+                    <small class="input-error-message">Ingresa un código de categoría que sea válido </small>
+                  }
+                </div>
+
+                <!-- category  -->
+
+                <div class="mb-3">
+                  <label for="category" class="form-label">Categoría</label>
+                  <input type="text" class="form-control" formControlName="category" placeholder="Nombre de la categoría"
+                    [ngClass]="{'is-invalid': form.controls['category'].errors && submitted}" >
+
+                  @if (form.controls['category'].errors && submitted) {
+                    <small class="input-error-message">Ingresa una categoría que sea válida</small>
+                  }
+
+                </div>
+
+                <!-- Button  -->
+
+                <div class="form-button">
+                    <button type="submit" class="btn btn-primary btn-new">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
