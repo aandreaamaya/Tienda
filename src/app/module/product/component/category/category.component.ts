@@ -36,40 +36,57 @@ export class CategoryComponent {
     if(this.form.invalid) return;
     this.submitted = false;
 
-    // add category to category list
-    let id = this.categories.length + 1;
-    let category = new Category(id, this.form.controls['category'].value!, this.form.controls['code'].value!, 1);
-    this.categories.push(category);
-
-    // close modal
-    this.hideModalForm();
-
-    // show message
-    const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "success",
-  title: "Registro exitoso"
-});
-
-  }
-
-  getCategories(){
-    this.categories = this.categoryService.getCategories();
-    console.log(this.categories);
-  }
-  getRegions(){
-    this.categories = this.categoryService.getCategories();
-  }
+        // add Category to Category list
+        this.categoryService.createCategory(this.form.value).subscribe({
+          next: (v) => {
+            console.log(v);
+    
+            // show message
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              toast: true,
+              text: v.body!.message,
+              background: '#E8F8F8',
+              showConfirmButton: false,
+              timer: 2000
+            });
+    
+            // reload categories
+            this.getCategories();
+    
+            // close modal
+            this.hideModalForm();
+          },
+          error: (e) => {
+            console.error(e);
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              toast: true,
+              text: e.error!.message,
+              background: '#F8E8F8',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
+        });
+    
+    
+      }
+    
+      getCategories(){
+        this.categoryService.getCategories().subscribe({
+          next: (v) => {
+            console.log(v);
+            this.categories = v.body!
+          },
+          error: (e) => {
+            console.log(e);
+          }
+        });
+    
+      }
 
 showModalForm(){
     $("#modalForm").modal("show");
