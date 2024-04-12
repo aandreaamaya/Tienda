@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from './module/product/authentication/authentication.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptor/auth.interceptor';
+import { CommonsModule } from './module/product/commons/commons.module'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { authInterceptor } from './core/interceptor/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     ProductModule,
-    AuthenticationModule,    
+    AuthenticationModule, 
+    CommonsModule     
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))

@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" name="username" placeholder="Username" formControlName="username" required>
               </div>
               <span class="help-block" style="color:red;"
-              *ngIf="fg.username.invalid && fg.username.touched">Ingresa un username</span>
+              *ngIf="fg.username.invalid && fg.username.touched">Ingresa tu username</span>
               <div class="input-group mb-2">
                 <div class="input-group-append">
                     <span class="input-group-text"><fa-icon [icon]="passwordIcon"></fa-icon></span>
@@ -22,7 +22,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password" required>
               </div>
               <span class="help-block" style="color:red;"
-              *ngIf="fg.password.invalid && fg.password.touched">Ingresa la contraseña.</span>
+              *ngIf="fg.password.invalid && fg.password.touched">Ingresa tu contraseña</span>
           <div class="d-flex justify-content-center mt-3 login_container">
             <button type="submit" [disabled]="loginForm.invalid || showLoading" name="button" class="btn login_btn">
               <i *ngIf="showLoading" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
@@ -34,7 +34,7 @@
       </div>
           <div class="mt-4">
             <div class="d-flex justify-content-center links">
-              ¿Necesitas una cuenta? &nbsp;<a routerLink="/register" class="ml-2" style="color: #2C3E50;">Registrate</a>
+              ¿Necesitas una cuenta? &nbsp;<a routerLink="/register" class="ml-2" style="color: #646464;">Registrate</a>
             </div>
           </div>
         </div>

@@ -5,10 +5,13 @@
     <div class="card-header">
       <div class="row">
           <div class="col">
-            <h4>Listado de categorías</h4>
+            <h4>Lista de categorías</h4>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-primary" style="float: right;" (click)="showModalForm()">Nueva categoría</button>
+            <button type="button" class="btn btn-primary" style="float: right;" (click)="showModalForm()">
+              <i class="ph ph-plus-circle"></i>
+              Agregar categoría
+            </button>
           </div>
       </div>
     </div>
@@ -26,15 +29,41 @@
                   <th>Código</th>
                   <th>Categoría</th>
                   <th>Estatus</th>
+                  <th>Más</th>
               </tr>
             </thead>
             <tbody>
                 @for(category of categories; track category; let i = $index ) {
                     <tr>
                         <td>{{ i + 1 }}</td>
-                        <td>{{ category.code }}</td>
+                        <td>{{ category.acronym }}</td>
                         <td>{{ category.category }}</td>
-                        <td>{{ category.status == 1? "Activo": "Inactivo" }}</td>
+                        <td>
+                          <div class="td-status" [ngClass]="{'td-status-enable': category.status == 1, 'td-status-disable': category.status == 0}" >
+                            {{ category.status == 0 ? "Inactivada" : "Activada" }}
+                            </div>
+                        </td>
+                        <td>
+                          <div class="dropdown">
+                            <!-- dots button  -->
+                            <button class="dropdown-button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="ph ph-dots-three-outline-vertical icon-menu"></i>
+                            </button>
+                            <!-- menu options -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" (click)="updateCategory(category)">
+                                <i class="ph ph-note-pencil icon-text-ul"></i>Editar
+                              </a>
+                              <a *ngIf="category.status == 0" class="dropdown-item enable-item" (click)="enableCategory(category.category_id)">
+                                <i class="ph ph-check-circle icon-text-ul"></i>Activar
+                              </a>
+                              <a *ngIf="category.status == 1" class="dropdown-item disable-item" (click)="disableCategory(category.category_id)">
+                                <i class="ph ph-x-circle icon-text-ul"></i>Desactivar
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+
                     </tr>
                 }
             </tbody>
@@ -57,14 +86,14 @@
 
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-                <!-- Code  -->
+                <!-- acronym  -->
 
                 <div class="mb-3">
-                  <label for="code" class="form-label">Código</label>
-                  <input type="text" class="form-control" formControlName="code" placeholder="Código de la categoría"
-                    [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}" >
+                  <label for="acronym" class="form-label">Código</label>
+                  <input type="text" class="form-control" formControlName="acronym" placeholder="Código de la categoría"
+                    [ngClass]="{'is-invalid': form.controls['acronym'].errors && submitted}" >
 
-                  @if (form.controls['code'].errors && submitted) {
+                  @if (form.controls['acronym'].errors && submitted) {
                     <small class="input-error-message">Ingresa un código de categoría que sea válido </small>
                   }
                 </div>
