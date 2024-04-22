@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
     }
   
     ngOnInit(): void {
-      if (this.authenticationService.isUserLoggedIn()) {
-        this.router.navigateByUrl('/secured/landing');
-      } else {
-        this.router.navigateByUrl('/login');
-      }
+      // if (this.authenticationService.isUserLoggedIn()) {
+      //   this.router.navigateByUrl('/secured/landing');
+      // } else {
+      //   this.router.navigateByUrl('/login');
+      // }
     }
   
     public onLogin(): void {
@@ -62,8 +62,9 @@ export class LoginComponent implements OnInit {
               return;
             }
             this.authenticationService.addUserToLocalCache(response.body);
-            this.router.navigateByUrl('/secured');
+            // this.router.navigateByUrl('/secured');
             this.showLoading = false;
+            window.location.reload();
           },
           (errorResponse: HttpErrorResponse) => {
             alert(errorResponse.error.message);

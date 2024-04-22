@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { ProductModule } from './module/product/product.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationModule } from './module/product/authentication/authentication.module';
+import { AuthenticationModule } from './module/authentication/authentication.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { LayoutModule } from './module/layout/layout.module';
 import { authInterceptor } from './core/interceptor/auth.interceptor';
-import { CommonsModule } from './module/product/commons/commons.module'
+import { CommonsModule } from './module/commons/commons.module'
+import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { CommonsModule } from './module/product/commons/commons.module'
     AppRoutingModule,
     ProductModule,
     AuthenticationModule, 
-    CommonsModule     
+    CommonsModule,     
+    NgxPhotoEditorModule
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))

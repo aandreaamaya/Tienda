@@ -1,0 +1,22 @@
+.card-body-product{
+    padding: 16px;
+}
+.product-image{
+    border-radius: 100%;
+    width: 240px;
+    height: 240px;
+}
+.edit-product{
+    color: blue;
+    cursor: pointer;
+    float: right;
+    margin-right: 16px;
+}
+.edit-product-image{
+    color: blue;
+    margin-bottom: 16px;
+}
+.product-title{
+    font-size: 32px;
+    margin-bottom: 16px;
+}

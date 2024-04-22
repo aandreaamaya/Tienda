@@ -3,7 +3,7 @@ import { Category } from '../../_model/category';
 import { CategoryService } from '../../_service/category.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from'sweetalert2';
-import { SwalMessages } from '../../../product/commons/_dto/swal-messages';
+import { SwalMessages } from '../../../commons/_dto/swal-messages';
 
 declare var $: any; // JQuery
 
