@@ -30,3 +30,6 @@
 .btn-new-image{
     float: right;
 }
+.ph.ph-eye:active{
+    color: aqua;
+}

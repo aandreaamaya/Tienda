@@ -3,6 +3,4 @@ export class Category{
     category: string = "";
     acronym: string = "";
     status: number = 0;
-
-
 }

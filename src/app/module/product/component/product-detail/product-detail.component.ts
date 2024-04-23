@@ -20,19 +20,19 @@ declare var $: any; // JQuery
 export class ProductDetailComponent {
 
   product: Product = new Product();
-  rfc: string = "";
+  gtin: string = "";
 
   categories: Category[] = [];
   category: Category = new Category();
 
   // formulario de actualización
   form = this.formBuilder.group({
-    name: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    surname: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    rfc: ["", [Validators.required, Validators.pattern("^[ñA-Z]{3,4}[0-9]{6}[0-9A-Z]{3}$")]],
-    mail: ["", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    product: ["", [Validators.required]],
+    gtin: ["", [Validators.required, Validators.pattern('^[0-9]{13}$')]],
+    description: ["", [Validators.required]],
+    price: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    stock: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     category_id: [0, [Validators.required]],
-    address: ["", [Validators.required]],
   });
   
   swal: SwalMessages = new SwalMessages(); // swal messages
@@ -51,19 +51,19 @@ export class ProductDetailComponent {
   ){}
 
   ngOnInit(){
-    this.rfc = this.route.snapshot.paramMap.get('rfc')!;
-    if(this.rfc){
+    this.gtin = this.route.snapshot.paramMap.get('gtin')!;
+    if(this.gtin){
       this.getProduct();
       this.getActiveCategories();
     }else{
-      this.swal.errorMessage("RFC inválido"); // show message
+      this.swal.errorMessage("GTIN inválido"); // show message
     }
   }
 
   // CRUD product
 
   getProduct(){
-    this.productService.getProduct(this.rfc).subscribe({
+    this.productService.getProduct(this.gtin).subscribe({
       next: (v) => {
         this.product = v.body!;
         this.getCategory(this.product.category_id);
@@ -82,19 +82,18 @@ export class ProductDetailComponent {
     this.submitted = false;
 
     console.log(this.form.value);
-    return;
-
+    
     this.productService.updateProduct(this.form.value, this.product.product_id).subscribe({
       next: (v) => {
         this.swal.successMessage(v.body!.message); // show message
 
-        // reload product if rfc changes
-        if(this.form.controls['rfc'].value != this.rfc){
-          this.rfc = this.form.controls['rfc'].value!; // update rfc
+        // reload product if gtin changes
+        if(this.form.controls['gtin'].value != this.gtin){
+          this.gtin = this.form.controls['gtin'].value!; // update gtin
 
           let currentUrl = this.router.url.split("/");
           currentUrl.pop();
-          currentUrl.push(this.rfc);
+          currentUrl.push(this.gtin);
           
           this.redirect(currentUrl); // update url
         }
@@ -115,12 +114,12 @@ export class ProductDetailComponent {
     this.form.reset();
     this.submitted = false;
 
-    this.form.controls['name'].setValue(this.product.name);
-    this.form.controls['surname'].setValue(this.product.surname);
-    this.form.controls['rfc'].setValue(this.product.rfc);
-    this.form.controls['mail'].setValue(this.product.mail);
+    this.form.controls['product'].setValue(this.product.product);
+    this.form.controls['gtin'].setValue(this.product.gtin);
+    this.form.controls['price'].setValue(this.product.price);
+    this.form.controls['stock'].setValue(this.product.stock);
     this.form.controls['category_id'].setValue(this.product.category_id);
-    this.form.controls['address'].setValue(this.product.address);
+    this.form.controls['description'].setValue(this.product.description);
 
     this.showModalForm();
   }

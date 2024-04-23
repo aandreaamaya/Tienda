@@ -21,17 +21,18 @@ declare var $: any; // JQuery
 export class ProductComponent {
 
   products: DtoProductList[] = []; // lista de clientes
+  productToUpdate: number = 0; // product id
   categories: Category[] = []; // lista de categoryes
 
-  // formulario de registro
+ // Product form
   form = this.formBuilder.group({
-    name: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    surname: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    rfc: ["", [Validators.required, Validators.pattern("^[ñA-Z]{3,4}[0-9]{6}[0-9A-Z]{3}$")]],
-    mail: ["", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-    category_id: ["", [Validators.required]],
-    address: ["", [Validators.required]],
-  });
+  product: ["", [Validators.required]],
+  gtin: ["", [Validators.required, Validators.pattern('^[0-9]{13}$')]],
+  description: ["", [Validators.required]],
+  price: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+  stock: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+  category_id: [0, [Validators.required]],
+});
 
   submitted = false; // indica si se envió el formulario
   
@@ -47,6 +48,7 @@ export class ProductComponent {
   // primera función que se ejecuta
   ngOnInit(){
     this.getProducts();
+    this.getActiveCategories();
   }
 
   // CRUD product
@@ -96,6 +98,17 @@ export class ProductComponent {
       }
     });
   }
+  getProduct(gtin: string){
+    this.productService.getProduct(gtin).subscribe({
+      next: (v) => {
+        return v.body!;
+      },
+      error: (e) => {
+        console.log(e);
+        this.swal.errorMessage(e.error!.message); // show message
+      }
+    });
+  }
 
   getProducts(){
     this.productService.getProducts().subscribe({
@@ -114,7 +127,13 @@ export class ProductComponent {
     this.submitted = true;
     if(this.form.invalid) return;
     this.submitted = false;
-
+    if(this.productToUpdate == 0){
+      this.onSubmitCreate();
+    }else{
+      this.onSubmitUpdate();
+    }
+  }
+  onSubmitCreate(){
     this.productService.createProduct(this.form.value).subscribe({
       next: (v) => {
         this.swal.successMessage(v.body!.message); // show message
@@ -128,8 +147,43 @@ export class ProductComponent {
     });
   }
 
-  showProduct(rfc: string){
-    this.router.navigate(['product/' + rfc]);
+  onSubmitUpdate(){
+    this.productService.updateProduct(this.form.value, this.productToUpdate).subscribe({
+      next: (v) => {
+        this.swal.successMessage(v.body!.message); // show message
+        this.getProducts(); // reload products
+        this.hideModalForm(); // close modal
+        this.productToUpdate = 0; // reset product to update
+      },
+      error: (e) => {
+        console.error(e);
+        this.swal.errorMessage(e.error!.message); // show message
+      }
+    });
+  }
+  updateProduct(gtin: string){
+    this.productService.getProduct(gtin).subscribe({
+      next: (v) => {
+        let product = v.body!;
+        this.productToUpdate = product.product_id;
+        this.form.reset();
+        this.submitted = false;
+        this.form.controls['product'].setValue(product.product);
+        this.form.controls['gtin'].setValue(product.gtin);
+        this.form.controls['price'].setValue(product.price);
+        this.form.controls['stock'].setValue(product.stock);
+        this.form.controls['category_id'].setValue(product.category_id);
+        this.form.controls['description'].setValue(product.description);
+        $("#modalForm").modal("show");
+      },
+      error: (e) => {
+        console.log(e);
+        this.swal.errorMessage(e.error!.message); // show message
+      }
+    });
+  }
+  showProduct(gtin: string){
+    this.router.navigate(['product/' + gtin]);
   }
 
   // catalogues
