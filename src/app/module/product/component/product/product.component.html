@@ -20,7 +20,7 @@
 
   <div class="card-body">
 
-      <!-- Category table  -->
+      <!-- Region table  -->
 
       <table class="table">
           <thead class="thead-dark">
@@ -39,7 +39,7 @@
                       <td>{{ i + 1 }}</td>
                       <td>{{ product.gtin }}</td>
                       <td>{{ product.product }}</td>
-                      <td>{{ product.price | currency: 'USD'}}</td>
+                      <td>{{ product.price }}</td>
                       <td>
                         <div class="td-status" [ngClass]="{'td-status-enable': product.status == 1, 'td-status-disable': product.status == 0}" >
                           {{ product.status == 0 ? "Inactivo" : "Activo" }}
@@ -53,19 +53,27 @@
                             <i class="ph ph-dots-three-outline-vertical icon-menu"></i>
                           </button>
       
-      
                           <!-- menu options -->
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" (click)="showProduct(product.gtin)">
-                              <i class="ph ph-eye icon-text-ul"></i>Ver detalles
-                            </a>
-                            <a *ngIf="product.status == 0" class="dropdown-item enable-item" (click)="enableProduct(product.product_id)">
-                              <i class="ph ph-check-circle icon-text-ul"></i>Activar
-                            </a>
-                            <a *ngIf="product.status == 1" class="dropdown-item disable-item" (click)="disableProduct(product.product_id)">
-                              <i class="ph ph-x-circle icon-text-ul"></i>Desactivar
-                            </a>
-                  
+                            @if(product.status != 0){
+                              <a class="dropdown-item" (click)="updateProduct(product.gtin)">
+                                <i class="ph ph-note-pencil icon-text-ul"></i>Editar
+                              </a>
+                              <a class="dropdown-item" (click)="showProductModal(product.gtin)">
+                                <i class="ph ph-eye icon-text-ul"></i>Ver detalles
+                              </a>
+                              <a class="dropdown-item" (click)="showImagesModal(product.product_id, product.product)">
+                                <i class="ph ph-image icon-text-ul"></i>Ver imágenes
+                              </a>
+                              
+                              <a class="dropdown-item disable-item" (click)="disableProduct(product.product_id)">
+                                <i class="ph ph-x-circle icon-text-ul"></i>Desactivar
+                              </a>
+                            }@else {
+                              <a class="dropdown-item enable-item" (click)="enableProduct(product.product_id)">
+                                <i class="ph ph-check-circle icon-text-ul"></i>Activar
+                              </a>
+                            }
                           </div>
                         </div>
                       </td>
@@ -188,4 +196,152 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Product modal  -->
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="productModal">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Producto</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+
+        <!-- Product form  -->
+
+        <div class="row">
+  
+            <!-- product  -->
+  
+            <div class="col-md-6"> 
+              <div class="mb-3">
+                <label class="product-label" for="product">Producto </label>
+                <p>{{ product.product }}</p>
+              </div>
+            </div>
+
+            <!-- gtin  -->
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="product-label" for="gtin">GTIN </label>
+                <p>{{ product.gtin }}</p>
+              </div>
+            </div>
+  
+            <!-- price  -->
+  
+            <div class="col-md-4"> 
+              <div class="mb-3">
+                <label class="product-label" for="price">Precio </label>
+                <p>{{ product.price | currency: 'USD'}}</p>
+              </div>
+            </div>
+  
+            <!-- stock  -->
+  
+            <div class="col-md-4"> 
+              <div class="mb-3">
+                <label class="product-label" for="stock">Cantidad en stock </label>
+                <p>{{ product.stock }}</p>
+              </div>
+            </div>  
+  
+            <!-- category_id  -->
+  
+            <div class="col-md-4"> 
+              <div class="mb-3">
+                <label class="product-label" for="category_id">Categoría </label>
+                <p>{{ product.category_id }}</p>
+              </div>
+            </div>
+  
+            <!-- description  -->
+  
+            <div class="mb-3">
+              <label class="product-label" for="description">Descripción </label>
+              <p>{{ product.description }}</p>
+            </div>
+        </div>
+
+        <!-- buttons  -->
+        
+        <div class="row">
+
+          <!-- data  -->
+
+          <!-- <div class="col-md-6">
+            <div class="form-button">
+              <button type="button" class="btn btn-primary btn-product-detail" (click)="updateProduct(this.product.gtin)">
+                <i class="ph ph-note-pencil"></i>
+                Editar
+              </button>
+            </div>
+          </div> -->
+
+          <!-- images  -->
+
+          <div class="col-md-6">
+            <div class="form-button">
+              <button type="button" class="btn btn-primary btn-product-images" (click)="showImagesModal(this.product.product_id, this.product.product)">
+                <i class="ph ph-image"></i>
+                Ver imágenes
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Images modal  -->
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="imagesModal">
+<div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ productNameImages }}</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="card-body-images">
+
+            <div class="row">
+              <div class="new-image">
+                <label for="uploadImage" class="cursor-pointer btn btn-primary btn-new btn-new-image">
+                  <i class="ph ph-plus-circle"></i>
+                  <input type="file" (change)="fileChangeHandler($event)" id="uploadImage" style="display:none">
+                  Agregar imagen
+                </label>
+              </div>
+            </div>
+            
+            <div class="row">
+                @for (image of images; track $index) {
+                    <div class="col-md-3">
+                        <div class="card card-image">
+                            <div class="card-body">
+                                <img src="{{ image.image }}" class="card-img-top" alt="...">
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn btn-danger btn-delete" (click)="deleteProductImage(image)">
+                                    <i class="ph ph-trash"></i>
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
 </div>

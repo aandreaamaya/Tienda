@@ -48,21 +48,21 @@
   cursor: pointer;
 }
 .dropdown-item:hover{
-  color: white !important;
+  color: rgb(202, 132, 138) !important;
 }
 .enable-item{
-  color: blue !important;
+  color: rgb(134, 134, 206) !important;
   cursor: pointer;
 }
 .enable-item:hover{
   color: white !important;
 }
 .disable-item{
-  color: red !important;
+  color: #cf5262 !important;
   cursor: pointer;
 }
 .disable-item:hover{
-  color: white !important;
+  color: #7e3c2d  !important;
 }
 .icon-text-ul{
   font-size: 14px;
@@ -76,10 +76,10 @@
   color: white;
 }
 .td-status-enable{
-  background-color: #3498db;
+  background-color: #57745b;
 }
 .td-status-disable{
-  background-color: #e74c3c;
+  background-color: #777777;
 }
 
 /*!
@@ -2210,8 +2210,8 @@ progress {
   appearance: none;
   background-color: #f7f7f9;
   background-clip: padding-box;
-  border: 0 solid var(--bs-border-color);
-  border-radius: 0;
+  border-color: #8f8f8f;
+  border-radius: 0 ;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {

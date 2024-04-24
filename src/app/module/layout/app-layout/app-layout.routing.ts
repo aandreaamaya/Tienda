@@ -5,7 +5,7 @@ import { LoginComponent } from '../../authentication/login/login.component';
 import { SecuredComponent } from '../../authentication/secured/secured.component';
 import { authenticationGuard } from '../../authentication/_guard/authentication.guard';
 import { ProductComponent } from '../../product/component/product/product.component';
-import { ProductDetailComponent } from '../../product/component/product-detail/product-detail.component';
+
 
 
 
@@ -14,7 +14,7 @@ export const AppLayoutRoutes: Routes = [
     {path: 'categoria', component: CategoryComponent},
     {path: 'producto', component: ProductComponent},
     { path: "product", component: ProductComponent },
-    { path: "product/:rfc", component: ProductDetailComponent },
+    { path: "product/:gtin", component: ProductComponent  },
     // {path: 'register', component: RegisterComponent},
     // {path: 'login', component: LoginComponent},
     {path: 'secured', component: SecuredComponent, canActivate : [authenticationGuard]}
