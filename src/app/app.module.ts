@@ -12,10 +12,13 @@ import { LayoutModule } from './module/layout/layout.module';
 import { authInterceptor } from './core/interceptor/auth.interceptor';
 import { CommonsModule } from './module/commons/commons.module'
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
+import { HomeComponent } from './module/home/home.component';
+import { CommonModule } from '@angular/common'; 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
     ProductModule,
     AuthenticationModule, 
     CommonsModule,     
-    NgxPhotoEditorModule
+    NgxPhotoEditorModule,
+    CommonModule
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))
