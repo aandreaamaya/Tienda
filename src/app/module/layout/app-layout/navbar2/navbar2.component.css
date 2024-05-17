@@ -1,10 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 .navbar{
     padding: 8px;
+    color: #000000;
+    background-color: #000000;
+}
+.navbar-custom {
+    background-color: #ffffff; /* Color personalizado */
+}
+
+
+.navbar-brand{
+    color: #000000;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .navbar-content{
     max-width: 1280px;
+    color: #000000;
+    font-weight: 100;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: auto;
+    
   }
 
 .nav-logo{
@@ -16,24 +35,26 @@
 }
 
 .nav-dropdown-menu{
-    background-color: #5c5c5c;
+    background-color: #ffffff;
     border-radius: 0px;
-    margin-top: 13px;
+    margin-bottom: 50px;
     border: none;
 }
 
 .nav-dropdown-item{
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
+    
 }
 
 .nav-dropdown-item:hover{
-    background-color: white;
+    background-color: rgb(173, 173, 173);
     color: black !important;
 }
 
 .nav-dropdown-menu-user{
     margin-top: 9px;
     left: -150%;
+    margin-bottom: 50px;
 }
 
 .nav-user-img{
@@ -41,17 +62,57 @@
 }
 
 .i-cart{
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 28px;
     vertical-align: middle;
     margin-right: 8px;
     margin-left: 24px;
+    margin-bottom: 50px;
 }
 
 .nav-link{ 
     cursor: pointer;
+    color: #000000;
 }
 
 .nav-register{
     margin-left: 12px;
+    color: #000000;
+
+}
+
+.search-form {
+    display: flex;
+    width: 450px;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: 80px;
+    padding: 1px;
+    background-color: #ffffff;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: transparent;
+    flex-grow: 1;
+    padding-left: 15px;
+}
+
+.search-button {
+    border: none;
+    background: none;
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.search-button:hover {
+    color: #000;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
 }

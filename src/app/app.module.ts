@@ -15,10 +15,13 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { HomeComponent } from './module/home/home.component';
 import { CommonModule } from '@angular/common'; 
 
+import { MaquillajeComponent } from './module/product/component/maquillaje/maquillaje.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    MaquillajeComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { CommonModule } from '@angular/common';
     AuthenticationModule, 
     CommonsModule,     
     NgxPhotoEditorModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))

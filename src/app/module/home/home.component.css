@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 /*!
 * Start Bootstrap - Shop Homepage v5.0.6 (https://startbootstrap.com/template/shop-homepage)
 * Copyright 2013-2023 Start Bootstrap
@@ -90,6 +91,11 @@
     scroll-behavior: smooth;
   }
 }
+.custom-carousel-image {
+  height: 450px; /* Ajusta la altura según sea necesario */
+  width: 800px;
+  object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
+}
 
 body {
   margin: 0;
@@ -117,10 +123,12 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+  
 }
 
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw);
+  
 }
 @media (min-width: 1200px) {
   h1, .h1 {
@@ -129,11 +137,14 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: calc(1.325rem + 0.9vw);
+  font-size: x-large;  
+  display: flex;
+  justify-content: center;
 }
 @media (min-width: 1200px) {
   h2, .h2 {
-    font-size: 2rem;
+    justify-content: center;
+    font-size: 100px;
   }
 }
 
@@ -4198,6 +4209,8 @@ textarea.form-control-lg {
 .card > .card-header + .list-group,
 .card > .list-group + .card-footer {
   border-top: 0;
+  border-bottom: 1px;
+  padding: 0;
 }
 
 .card-body {
@@ -7664,10 +7677,15 @@ textarea.form-control-lg {
 
 .mb-4 {
   margin-bottom: 1.5rem !important;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: xx-large;
 }
+
 
 .mb-5 {
   margin-bottom: 3rem !important;
+  font-family: 'Times New Roman', Times, serif;
+
 }
 
 .mb-auto {
@@ -7715,11 +7733,15 @@ textarea.form-control-lg {
 }
 
 .p-3 {
-  padding: 1rem !important;
+  padding: 0rem !important;
+  color: #a52834;
+  justify-content: center;
+  display: flex;
 }
 
 .p-4 {
-  padding: 1.5rem !important;
+  padding: 0.5rem !important;
+  
 }
 
 .p-5 {

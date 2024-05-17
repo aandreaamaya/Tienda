@@ -7,6 +7,8 @@ import { authenticationGuard } from '../../authentication/_guard/authentication.
 import { ProductComponent } from '../../product/component/product/product.component';
 import { HomeComponent } from '../../home/home.component';
 import { InvoiceComponent } from '../../invoice/component/invoice/invoice.component';
+import { MaquillajeComponent } from '../../product/component/maquillaje/maquillaje.component';
+
 export const AppLayoutRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'categoria', component: CategoryComponent},
@@ -14,6 +16,7 @@ export const AppLayoutRoutes: Routes = [
     { path: "product", component: ProductComponent },
     { path: "product/:gtin", component: ProductComponent  },
     {path: 'factura', component: InvoiceComponent},
+    {path: 'producto/categoria/:category_id', component: MaquillajeComponent},
     // {path: 'register', component: RegisterComponent},
     // {path: 'login', component: LoginComponent},
     {path: 'secured', component: SecuredComponent, canActivate : [authenticationGuard]}
