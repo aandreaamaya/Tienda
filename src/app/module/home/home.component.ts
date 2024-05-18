@@ -30,7 +30,7 @@ export class HomeComponent {
     private productService: ProductService,
     private productImageService: ProductImageService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
@@ -55,7 +55,7 @@ export class HomeComponent {
       next: (v) => {
         this.products = v.body!;
         console.log(this.products);
-  
+
         // Llamar al método para obtener la primera imagen de cada producto
         this.products.forEach((product) => {
           this.getFirstImageOfProducts(product.product_id);
@@ -67,13 +67,13 @@ export class HomeComponent {
       }
     });
   }
-  
+
   getFirstImageOfProducts(product_id: number) {
     this.productImageService.getProductImages(product_id).subscribe({
       next: (v) => {
         const productImages = v.body! || [];
         console.log(productImages);
-  
+
         // Encuentra el producto y asigna la primera imagen
         const productIndex = this.products.findIndex(product => product.product_id === product_id);
         if (productIndex !== -1 && productImages.length > 0) {
@@ -86,16 +86,20 @@ export class HomeComponent {
       }
     });
   }
-  
 
-  seeMore(){
+
+  seeMore() {
 
   }
-  showDetail(gtin: string) {
+  showDetailAdmin(gtin: string) {
     //redirect to product detail
     // this.router.navigate(['/product/detail'], { queryParams: { gtin: gtin } });
     console.log(gtin);
     this.router.navigate([`product/${gtin}`]);
+  }
+
+  showDetail(gtin: string) {
+    this.router.navigate([`producto-detalle/${gtin}`]);
   }
 
   addToCart(gtin: string) {
@@ -105,7 +109,7 @@ export class HomeComponent {
     }
 
     this.cartService.addToCart(cart).subscribe({
-      next: (v) => {  
+      next: (v) => {
         this.swal.successMessage("Product added to cart");
         this.cartService.getCount();
       },

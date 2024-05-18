@@ -19,7 +19,7 @@
         <!-- categories -->
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maquillaje</a>
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorias</a>
           <div class="dropdown-menu nav-dropdown-menu">
               @for(category of categories; track category) {
                   <a class="dropdown-item nav-dropdown-item" routerLink="#">{{ category.category }}</a>
@@ -27,14 +27,6 @@
           </div>
       </li>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuidado de la piel</a>
-        <div class="dropdown-menu nav-dropdown-menu">
-            @for(category of categories; track category) {
-                <a class="dropdown-item nav-dropdown-item" routerLink="#">{{ category.category }}</a>
-            }
-        </div>
-    </li>
       
         <!-- admin -->
 
@@ -139,7 +131,7 @@
 
           <!-- Register component  -->
           
-          <!-- <app-register></app-register> -->
+           <app-register (registerEvent)="handleRegistrationSuccess($event)"></app-register> 
           
       </div>
     </div>

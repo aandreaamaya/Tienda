@@ -3,6 +3,9 @@ import { AuthenticationService } from '../../../authentication/_service/authenti
 import { Category } from '../../../product/_model/category';
 import { CategoryService } from '../../../product/_service/category.service';
 import { SwalMessages } from '../../../commons/_dto/swal-messages';
+import { RegisterComponent } from '../../../authentication/register/register.component';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 declare var $: any; // JQuery
 
@@ -23,18 +26,18 @@ export class Navbar2Component {
   constructor(
     private categoryService: CategoryService,
     private servicioAutenticacion: AuthenticationService
-  ){}
+  ) { }
 
-  ngOnInit(){
-    if(localStorage.getItem("token")){
+  ngOnInit() {
+    if (localStorage.getItem("token")) {
       this.loggedIn = true;
     }
 
-    if(localStorage.getItem("user")){
+    if (localStorage.getItem("user")) {
       let user = JSON.parse(localStorage.getItem("user")!);
-      if(user.rol == "ADMIN"){
+      if (user.rol == "ADMIN") {
         this.isAdmin = true;
-      }else{
+      } else {
         this.isAdmin = false;
       }
     }
@@ -42,7 +45,7 @@ export class Navbar2Component {
     this.getCategories();
   }
 
-  getCategories(){
+  getCategories() {
     this.categoryService.getActiveCategories().subscribe({
       next: (v) => {
         this.categories = v.body!;
@@ -55,18 +58,31 @@ export class Navbar2Component {
   }
 
 
-  logout(){
+  logout() {
     this.servicioAutenticacion.logOut();
     this.loggedIn = false;
     window.location.reload();
   }
 
-  showLoginModal(){
+  showLoginModal() {
     $("#loginModal").modal("show");
   }
 
-  showRegisterModal(){
+  showRegisterModal() {
     $("#registerModal").modal("show");
   }
+
+  closeRegistrationModal() {
+    $("#registerModal").modal("hide");
+
+  }
+
+  handleRegistrationSuccess(event: boolean) {
+    if (event) {
+      // Si el registro es exitoso, cierra el modal
+      this.closeRegistrationModal();
+    }
+  }
+
 
 }

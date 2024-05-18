@@ -6,11 +6,14 @@ import { AppRoutingModule } from '../.././app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
     SecuredComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
@@ -21,9 +24,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  exports:[
+  exports: [
     LoginComponent,
-    // RegisterComponent
+    RegisterComponent
   ]
 })
 export class AuthenticationModule { }

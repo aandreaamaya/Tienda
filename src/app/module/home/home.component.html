@@ -51,41 +51,79 @@
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
         @for(product of products; track product; let i = $index ) {
-            <div class="col mb-5">
-              <div class="card h-100">
-                <!-- Product image-->
-                <div class="row g-3">
-                  <div class="col-md-3">
-                    <div class="card">
-                        <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
-                        (click)="showDetail(product.gtin)" />
-                      <div class="card-body text-center">
+            @if(isAdmin){
+                <div class="col mb-5">
+                    <div class="card h-100">
+                      <!-- Product image-->
+                      <div class="row g-3">
+                        <div class="col-md-3">
+                          <div class="card">
+                              <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
+                              (click)="showDetailAdmin(product.gtin)" />
+                            <div class="card-body text-center">
+                            </div>
+                          </div>
+                        </div>
                       </div>
+                      <!-- Product details-->
+                      <div class="card-body p-4">
+                        <div class="text-center">
+                          <!-- Product name-->
+                          <h5 class="fw-bolder">{{product.product}}</h5>
+                          <!-- Product price-->
+                          ${{product.price}}
+                        </div>
+                      </div>
+                      @if(product.stock > 0){
+                          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                              <div class="add-cart-container"><a class="btn btn-cart" (click)="addToCart(product.gtin)"><i
+                                          class="ph ph-shopping-bag"></i> <span>Añadir</span></a></div>
+                          </div>
+                          }@else{
+                          <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
+                              <p>Agotado</p>
+                          </div>
+                          }
                     </div>
                   </div>
-                </div>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{product.product}}</h5>
-                    <!-- Product price-->
-                    ${{product.price}}
-                  </div>
-                </div>
-                @if(product.stock > 0){
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="add-cart-container"><a class="btn btn-cart" (click)="addToCart(product.gtin)"><i
-                                    class="ph ph-shopping-bag"></i> <span>Añadir</span></a></div>
+                
+            }@else{
+
+                <div class="col mb-5">
+                    <div class="card h-100">
+                    <!-- Product image-->
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                        <div class="card">
+                            <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
+                            (click)="showDetail(product.gtin)" />
+                            <div class="card-body text-center">
+                            </div>
+                        </div>
+                        </div>
                     </div>
-                    }@else{
-                    <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
-                        <p>Agotado</p>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{product.product}}</h5>
+                        <!-- Product price-->
+                        ${{product.price}}
+                        </div>
                     </div>
-                    }
-              </div>
-            </div>
-          
+                    @if(product.stock > 0){
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="add-cart-container"><a class="btn btn-cart" (click)="addToCart(product.gtin)"><i
+                                        class="ph ph-shopping-bag"></i> <span>Añadir</span></a></div>
+                        </div>
+                        }@else{
+                        <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
+                            <p>Agotado</p>
+                        </div>
+                        }
+                    </div>
+                </div>
+            }
         
         }
     </div>

@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { ProductComponent } from './component/product/product.component';
+import { DetalleComponent } from './component/detalle/detalle.component';
 @NgModule({
   declarations: [
     CategoryComponent,
     // ProductDetailComponent,
-    ProductComponent
+    ProductComponent,
+    DetalleComponent
   ],
   imports: [
     CommonModule,
