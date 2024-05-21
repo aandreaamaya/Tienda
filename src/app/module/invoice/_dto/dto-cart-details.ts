@@ -6,6 +6,6 @@ export class DtoCartDetails{
     quantity: number = 0;
     product: Product = new Product();
     image: string = "";
-
+    
 
 }

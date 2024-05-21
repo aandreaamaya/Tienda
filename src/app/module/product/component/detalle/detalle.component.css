@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+.carousel-container .carousel-inner {
+    max-height: 200px; /* Ajusta este valor según sea necesario */
+    overflow: hidden;
+}
+
+.carousel-container .carousel-inner img.product-image {
+    max-height: 200px; /* Ajusta este valor según sea necesario */
+    object-fit: cover;
+}
+
+.product-info-container {
+    padding: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 50px;
+    border-radius: 5px;
+}
+
+.product-info-container .title {
+    margin-bottom: 20px;
+
+}
+
+.product-info-container .product-price {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.product-info-container .details-label {
+    font-weight: bold;
+}
+
+.product-info-container .paragraph {
+    margin-bottom: 10px;
+}
+
+.product-info-container .button-show-more {
+    color: #474747;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn-cont .shopping-cart-button {
+    width: 100%;
+    background-color: #686868;
+    color: white;
+}
+
+.btn-cont .shopping-cart-button:hover {
+    background-color: #0056b3;
+}
+
+.admin-button {
+    background-color: #5f5f5f;
+    color: white;
+    margin-right: 10px;
+}
+
+.admin-button:hover {
+    background-color: #a0a0a0;
+}
+.stock-available {
+    color: green;
+    font-weight: bold;
+}
+
+.stock-out {
+    color: red;
+    font-weight: bold;
+}
+.quantity-selector-container {
+    display: flex;
+    justify-content: center;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.text-center {
+    text-align: center;
+}

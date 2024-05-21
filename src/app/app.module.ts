@@ -15,7 +15,7 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { HomeComponent } from './module/home/home.component';
 import { CommonModule } from '@angular/common'; 
 
-import { MaquillajeComponent } from './module/product/component/maquillaje/maquillaje.component';
+import { MaquillajeComponent } from './module/product/component/ProductosPorCategoria/maquillaje.component';
 
 @NgModule({
   declarations: [

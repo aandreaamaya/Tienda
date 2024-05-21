@@ -87,7 +87,7 @@ export class MaquillajeComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.getProductsByCategory(3).subscribe({
+    this.productService.getProducts().subscribe({
       next: (v) => {
         this.products = v.body!;
         this.products.forEach((product) => {
@@ -105,6 +105,9 @@ export class MaquillajeComponent implements OnInit {
     this.productImageService.getProductImages(product_id).subscribe({
       next: (v) => {
         const productImages = v.body! || [];
+        console.log(productImages);
+
+        // Encuentra el producto y asigna la primera imagen
         const productIndex = this.products.findIndex(product => product.product_id === product_id);
         if (productIndex !== -1 && productImages.length > 0) {
           this.products[productIndex].image = productImages[0].image;
@@ -112,7 +115,7 @@ export class MaquillajeComponent implements OnInit {
       },
       error: (e) => {
         console.log(e);
-        this.swal.errorMessage(e.error!.message);
+        this.swal.errorMessage(e.error!.message); // mostrar mensaje
       }
     });
   }
@@ -121,6 +124,9 @@ export class MaquillajeComponent implements OnInit {
     this.productService.getProductsByCategory(category_id).subscribe({
       next: (v) => {
         this.products = v.body!;
+        this.products.forEach((product) => {
+          this.getFirstImageOfProducts(product.product_id);
+        });
       },
       error: (e) => {
         console.log(e);
@@ -185,6 +191,9 @@ export class MaquillajeComponent implements OnInit {
   }
 
   showDetail(gtin: string) {
+    this.router.navigate([`producto-detalle/${gtin}`]);
+  }
+  showDetailAdmin(gtin: string) {
     //redirect to product detail
     // this.router.navigate(['/product/detail'], { queryParams: { gtin: gtin } });
     console.log(gtin);
