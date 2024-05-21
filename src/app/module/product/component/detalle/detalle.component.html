@@ -1,325 +1,109 @@
+
 <div class="container">
-    <button class="btn btn-back" (click)="goBack()">
+  <button class="btn btn-back" (click)="goBack()">
       <i class="ph ph-arrow-left"></i>
-      <span> Go back</span>
-    </button>
-  
-    <section class="card carousel-container">
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        @if(productImages.length > 1){
-        <div class="carousel-indicators">
-          <button *ngFor="let image of productImages; let i = index" type="button"
-            [attr.data-bs-target]="'#carouselExampleIndicators'" [attr.data-bs-slide-to]="i"
-            [ngClass]="{'active': i === 0}" [attr.aria-label]="'Slide {{ i + 1 }}'"></button>
-        </div>
-  
-        }
-        <div class="carousel-inner">
-          <div class="carousel-inner">
-            <div *ngFor="let image of productImages; let i = index" class="carousel-item" [class.active]="i === 0">
-              <img class="image" [src]="image.image" alt="{{image.image}}">
-  
-  
-              @if(isAdmin){
-              <div class="text-center">
-                <button class="btn admin-button mt-3" (click)="deleteImage(image.product_image_id)"><i
-                    class="ph ph-trash"></i> Delete image</button>
-              </div>
-              }
-            </div>
-          </div>
-        </div>
-        @if(productImages.length > 1){
-  
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-        }
-      </div>
-  
-  
-    </section>
-  
-    <section class="card product-info-container">
+      <span> Volver</span>
+  </button>
+
+  <section class="card product-detail-container">
       <div class="row">
-        <div class="title">
-  
-          <h1 class="title">{{product.product}}</h1>
-  
-        </div>
-        <div class="mb-3">
-          @if(isAdmin){
-  
-          <label class="details-label" for="description">Product description</label>
-          }
-          <div class="mb-3">
-            <p class="paragraph">{{ mostrarDescripcionCompleta ? product.description : (product.description |
-              slice:0:limiteCaracteres) }}{{ !mostrarDescripcionCompleta && product.description.length > limiteCaracteres
-              ? '...' : '' }}</p>
-            <span class="button-show-more" *ngIf="product.description.length > limiteCaracteres"
-              (click)="mostrarDescripcionCompleta = !mostrarDescripcionCompleta">
-              {{ mostrarDescripcionCompleta ? 'Show less' : 'Show more' }}
-            </span>
+          <!-- Imagen del producto -->
+          <div class="col-md-6">
+              <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                  @if(productImages.length > 1){
+                  <div class="carousel-indicators">
+                      <button *ngFor="let image of productImages; let i = index" type="button" [attr.data-bs-target]="'#carouselExampleIndicators'" [attr.data-bs-slide-to]="i" [ngClass]="{'active': i === 0}" [attr.aria-label]="'Slide {{ i + 1 }}'"></button>
+                  </div>
+                  }
+                  <div class="carousel-inner">
+                      <div *ngFor="let image of productImages; let i = index" class="carousel-item" [class.active]="i === 0">
+                          <img class="d-block w-100 product-image" [src]="image.image" alt="{{image.image}}">
+                          @if(isAdmin){
+                          <div class="text-center">
+                              <button class="btn admin-button mt-3" (click)="deleteImage(image.product_image_id)"><i class="ph ph-trash"></i> Borrar imagen</button>
+                          </div>
+                          }
+                      </div>
+                  </div>
+                  @if(productImages.length > 1){
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
+                  }
+              </div>
           </div>
-  
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3">
-            @if(isAdmin){
-  
-            <label class="details-label " for="price">Price</label>
-            }
-            <p class=" product-price">$ {{product.price}}</p>
-          </div>
-        </div>
-        @if(isAdmin){
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label class="details-label" for="gtin">GTIN </label>
-            <p class="paragraph">{{product.gtin}}</p>
-          </div>
-        </div>
-  
-        }
-        <!-- <div class="col-md-6">
-            <div class="mb-3">
-              <label class="details-label" for="stock">Product stock</label>
-              <p class="stock paragraph">{{product.stock}}</p>
-    
-            </div>
-          </div> -->
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label class="details-label" for="category_id">Category</label>
-            <p class="paragraph">{{category}}</p>
-          </div>
-        </div>
-  
-        @if(!isAdmin){
-  
-          @if(loggedIn){
-            <div class="btn-cont mt-5">
-              <div class=" col-md-6 quantity-selector-container card mt-2">
-                <div class=" quantity-selector">
-  
-                  <button (click)="quantityDown()"><i class="ph ph-minus"></i></button>
-                  <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
-                  <button (click)="quantityUp()"><i class="ph ph-plus"></i></button>
-  
+
+          <!-- Información del producto -->
+          <div class="col-md-6">
+              <div class="product-info-container">
+                  <div class="title">
+                      <h1 class="title">{{product.product}}</h1>
+                  </div>
+                  <div class="mb-3">
+                      @if(isAdmin){
+                      <label class="details-label" for="description">Product description</label>
+                      }
+                      <div class="mb-3">
+                          <p class="paragraph">{{ mostrarDescripcionCompleta ? product.description : (product.description | slice:0:limiteCaracteres) }}{{ !mostrarDescripcionCompleta && product.description.length > limiteCaracteres ? '...' : '' }}</p>
+                          <span class="button-show-more" *ngIf="product.description.length > limiteCaracteres" (click)="mostrarDescripcionCompleta = !mostrarDescripcionCompleta">
+                              {{ mostrarDescripcionCompleta ? 'Show less' : 'Show more' }}
+                          </span>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      @if(isAdmin){
+                      <label class="details-label" for="price">Price</label>
+                      }
+                      <p class="product-price">$ {{product.price}}</p>
+                  </div>
+                  @if(isAdmin){
+                  <div class="mb-3">
+                      <label class="details-label" for="gtin">GTIN </label>
+                      <p class="paragraph">{{product.gtin}}</p>
+                  </div>
+                  }
+                  <div class="mb-3">
+                    <label class="details-label" for="stock"> </label>
+                    <p class="paragraph" [ngClass]="{'stock-available': product.stock > 0, 'stock-out': product.stock < 1}">
+                        {{ product.stock > 0 ? 'Disponible' : 'Agotado' }}
+                    </p>
                 </div>
+                
+
+                  @if(!isAdmin){
+                  <div class="btn-cont mt-5">
+                    <div class="quantity-selector-container card mt-2 text-center">
+                      <div class="quantity-selector d-inline-block">
+                          <button class="btn btn-small" (click)="quantityDown()"><i class="ph ph-minus"></i></button>
+                          <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
+                          <button class="btn btn-small" (click)="quantityUp()"><i class="ph ph-plus"></i></button>
+                      </div>
+                  </div>
+
+                      <div class="shopping-cart-button-container mt-2">
+                          <button class="btn shopping-cart-button" (click)="addToCart()">
+                              <i class="ph ph-shopping-bag icon-text-ul"></i>
+                              <span>Añadir</span>
+                          </button>
+                      </div>
+                  </div>
+                  }@else {
+                  <div class="admin-buttons-container">
+                      <button class="btn admin-button" (click)="editarProducto()">
+                          <i class="ph ph-note-pencil icon-text-ul"></i> Edit
+                      </button>
+                      <button class="btn admin-button" (click)="showImageModal()">
+                          <i class="ph ph-plus"></i> Add image
+                      </button>
+                  </div>
+                  }
               </div>
-  
-              <div class="col-md-6 shopping-cart-button-container mt-2">
-  
-                <button class="col-md-6 btn shopping-cart-button" (click)="addToCart()">
-                  <i class="ph ph-shopping-bag icon-text-ul"></i>
-                  <span>Add to cart</span>
-  
-                </button>
-              </div>
-            </div>
-          }@else {
-            <div class="btn-cont mt-5">
-              <div class=" col-md-6 quantity-selector-container card mt-2">
-                <div class=" quantity-selector">
-  
-                  <button (click)="quantityDown()"><i class="ph ph-minus"></i></button>
-                  <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
-                  <button (click)="quantityUp()"><i class="ph ph-plus"></i></button>
-  
-                </div>
-              </div>
-  
-              <div class="col-md-6 shopping-cart-button-container mt-2">
-  
-                <button class="col-md-6 btn shopping-cart-button">
-                  <i class="ph ph-shopping-bag icon-text-ul"></i>
-                  <span>Inicia sesión para acceder a tu carrito</span>
-  
-                </button>
-              </div>
-            </div>
-          }
-  
-        }@else {
-        <div class="admin-buttons-container">
-  
-          <button class="btn admin-button" (click)="editarProducto()">
-            <i class="ph ph-note-pencil icon-text-ul"></i> Edit
-          </button>
-          <button class="btn admin-button" (click)="showImageModal()">
-            <i class="ph ph-plus"></i> Add image
-          </button>
-  
-        </div>
-        }
-  
+          </div>
       </div>
-  
-  
-  
-    </section>
-  </div>
-  
-  
-  <!-- Modal form  -->
-  
-  <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="modalForm">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content size-body">
-        <div class="modal-header">
-          <h5 class="modal-title">Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-  
-          <!-- Product form  -->
-  
-          <form [formGroup]="form" (ngSubmit)="onSubmit()" id="fm">
-  
-  
-            <div class="row">
-  
-              <!-- gtin  -->
-  
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="gtin">GTIN <span class="color-red">*</span> </label>
-                  <input type="text" class="form-control" formControlName="gtin" id="gtin"
-                    placeholder="Product's GTIN code..."
-                    [ngClass]="{'is-invalid': form.controls['gtin'].errors && submitted}">
-                  @if (form.controls['gtin'].errors && submitted) {
-                  <small class="input-error-message">Please write a valid gtin code</small>
-                  }
-                </div>
-              </div>
-  
-              <!-- product  -->
-  
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="product">Product <span class="color-red">*</span> </label>
-                  <input type="text" class="form-control" formControlName="product" id="product"
-                    placeholder="Product Name..."
-                    [ngClass]="{'is-invalid': form.controls['product'].errors && submitted}">
-                  @if (form.controls['product'].errors && submitted) {
-                  <small class="input-error-message">Please write a valid product name, product name contains only
-                    letters</small>
-                  }
-                </div>
-              </div>
-  
-              <!-- price  -->
-  
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="price">Price <span class="color-red">*</span> </label>
-                  <input type="text" class="form-control" formControlName="price" id="price"
-                    placeholder="Product price..." [ngClass]="{'is-invalid': form.controls['price'].errors && submitted}">
-                  @if (form.controls['price'].errors && submitted) {
-                  <small class="input-error-message">Please enter a valid price, price must be a decimal
-                    number</small>
-                  }
-                </div>
-              </div>
-  
-              <!-- stock  -->
-  
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="stock">Cantidad de productos <span class="color-red">*</span> </label>
-                  <input type="text" class="form-control" formControlName="stock" id="stock"
-                    placeholder="Product's stock..."
-                    [ngClass]="{'is-invalid': form.controls['stock'].errors && submitted}">
-                  @if (form.controls['stock'].errors && submitted) {
-                  <small class="input-error-message">Please enter a valid stock value, must be only a number</small>
-                  }
-                </div>
-              </div>
-  
-              <!-- category_id  -->
-  
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="category_id">Category <span class="color-red">*</span> </label>
-                  <select class="form-select" formControlName="category_id" id="category_id"
-                    [ngClass]="{'is-invalid': form.controls['category_id'].errors && submitted}">
-                    <option [ngValue]=null hidden>Select a category...</option>
-                    @for(category of categories; track category) {
-                    <option [ngValue]="category.category_id">{{ category.category }}</option>
-                    }
-                  </select>
-                  @if (form.controls['category_id'].errors && submitted) {
-                  <small class="input-error-message">Pelase select a valid category</small>
-                  }
-                </div>
-              </div>
-  
-              <!-- description  -->
-  
-              <div class="mb-3">
-                <label for="description">Description <span class="color-red">*</span> </label>
-                <textarea rows="2" class="form-control" formControlName="description" id="description"
-                  placeholder="Descripción del producto..."
-                  [ngClass]="{'is-invalid': form.controls['description'].errors && submitted}">
-                          </textarea>
-                @if (form.controls['description'].errors && submitted) {
-                <small class="input-error-message">Please enter a valid description, must contains only
-                  letters</small>
-                }
-              </div>
-            </div>
-  
-            <!-- button  -->
-  
-            <div class="form-button">
-              <button type="submit" class="btn modal-btn btn-primary btn-new">Save</button>
-            </div>
-  
-          </form>
-  
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Images Modal -->
-  <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="modalImages">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content size-body">
-        <div class="modal-header">
-          <h5 class="modal-title">Product Images</h5>
-  
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-  
-          <section class="images-container">
-            <div *ngIf="productImages.length > 0; else noImages">
-              <div class="product-images-container">
-                @for(image of productImages; track image){
-                <img [src]="image.image" alt="Product Image" class="img-fluid product-img" style="margin-bottom: 10px;">
-  
-                }
-              </div>
-  
-            </div>
-            <ng-template #noImages>
-              <p class="no-images-text">No images available for this product.</p>
-            </ng-template>
-          </section>
-          <label for="file-upload" class="btn new-image-btn ">
-            New Image
-          </label>
-          <input id="file-upload" type="file" (change)="newImage($event)" />
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
+</div>

@@ -7,7 +7,7 @@ import { ProductImageService } from '../product/_service/product-image.service';
 import { ProductImage } from '../product/_model/product-image';
 import { Router } from '@angular/router';
 import { CartService } from '../invoice/_service/cart.service';
-
+import { FormBuilder, Validators  } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -21,15 +21,26 @@ export class HomeComponent {
   loggedIn: boolean = false; // is logged in
   images: ProductImage[] = [];
   products: DtoProductList[] = [];
+  product: any = {};
   productImages: ProductImage[] = []; // product images
   firstImage: ProductImage = new ProductImage();
 
+  // Product form
+  form = this.formBuilder.group({
+    product: ["", [Validators.required]],
+    gtin: ["", [Validators.required, Validators.pattern('^[0-9]{13}$')]],
+    description: ["", [Validators.required]],
+    price: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    stock: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    category_id: [0, [Validators.required]],
+  });
 
   constructor(
     private router: Router,
     private productService: ProductService,
     private productImageService: ProductImageService,
-    private cartService: CartService
+    private cartService: CartService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {

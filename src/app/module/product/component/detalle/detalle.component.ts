@@ -38,7 +38,7 @@ export class DetalleComponent {
   loggedIn: boolean = false;
   isAdmin: boolean = false;
   productQuantity: number = 1;
-
+  activeImageIndex = 0;
   mostrarDescripcionCompleta: boolean = false;
   limiteCaracteres: number = 300; // Establece el límite de caracteres deseado
 
@@ -82,6 +82,8 @@ export class DetalleComponent {
       }
     })
 
+
+    
     this.categoryService.getCategories().subscribe({
       next: (response) => {
         this.categories = response.body!;
@@ -113,6 +115,10 @@ export class DetalleComponent {
       console.log(this.isAdmin);
     }
 
+  }
+
+  setActiveImage(index: number): void {
+    this.activeImageIndex = index;
   }
 
 

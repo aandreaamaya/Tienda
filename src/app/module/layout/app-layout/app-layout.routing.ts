@@ -7,7 +7,7 @@ import { authenticationGuard } from '../../authentication/_guard/authentication.
 import { ProductComponent } from '../../product/component/product/product.component';
 import { HomeComponent } from '../../home/home.component';
 import { InvoiceComponent } from '../../invoice/component/invoice/invoice.component';
-import { MaquillajeComponent } from '../../product/component/maquillaje/maquillaje.component';
+import { MaquillajeComponent } from '../../product/component/ProductosPorCategoria/maquillaje.component';
 import { DetalleComponent } from '../../product/component/detalle/detalle.component';
 
 export const AppLayoutRoutes: Routes = [
