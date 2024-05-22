@@ -1,32 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../_service/product.service';
 import { CategoryService } from '../../_service/category.service';
 import Swal from 'sweetalert2';
 import { Category } from '../../_model/category';
-import { ProductComponent } from '../product/product.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SwalMessages } from '../../../commons/_dto/swal-messages';
 import { Location } from '@angular/common';
 import { ProductImage } from '../../_model/product-image';
-import { Cart } from '../../../invoice/_model/cart';
 import { CartService } from '../../../invoice/_service/cart.service';
 import { ProductImageService } from '../../_service/product-image.service';
 import { NgxPhotoEditorService } from 'ngx-photo-editor';
+import { Product } from '../../_model/product';
 
 declare var $: any;
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
-  styleUrl: './detalle.component.css'
+  styleUrls: ['./detalle.component.css']
 })
-
-
-export class DetalleComponent {
-
-
-
+export class DetalleComponent implements OnInit {
+  images: ProductImage[] = [];
   gtin = '0';
   product: any = {};
   category: any = {};
@@ -34,14 +29,15 @@ export class DetalleComponent {
   submitted = false;
   swal: SwalMessages = new SwalMessages();
   id = 0;
-  productImages: ProductImage[] = []; // product images
+  productImages: ProductImage[] = [];
   loggedIn: boolean = false;
   isAdmin: boolean = false;
   productQuantity: number = 1;
   activeImageIndex = 0;
   mostrarDescripcionCompleta: boolean = false;
-  limiteCaracteres: number = 300; // Establece el límite de caracteres deseado
-
+  limiteCaracteres: number = 300;
+  productToUpdate: number = 0;
+  productNameImages: string = "";
 
   constructor(
     private rutaActiva: ActivatedRoute,
@@ -62,28 +58,13 @@ export class DetalleComponent {
     price: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     stock: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     category_id: [0, [Validators.required]],
-  })
+  });
 
   ngOnInit(): void {
     this.gtin = this.rutaActiva.snapshot.params['gtin'];
     console.log(this.gtin);
-    this.product = this.productService.getProduct(this.gtin).subscribe({
-      next: (v) => {
-        this.product = v.body;
-        this.getProductImages(this.product.product_id);
-        this.category = this.categoryService.getCategory(this.product.category_id).subscribe({
-          next: (v) => {
-            this.category = v.body?.category;
-          },
-          error: (e) => {
-            console.log(e);
-          }
-        })
-      }
-    })
+    this.getProductDetails(this.gtin);
 
-
-    
     this.categoryService.getCategories().subscribe({
       next: (response) => {
         this.categories = response.body!;
@@ -99,55 +80,52 @@ export class DetalleComponent {
           color: 'white'
         });
       }
-
-    })
+    });
 
     if (localStorage.getItem('token')) {
       this.loggedIn = true;
     }
     if (localStorage.getItem('user')) {
       let user = JSON.parse(localStorage.getItem('user')!);
-      if (user.rol == 'ADMIN') {
-        this.isAdmin = true;
-      } else {
-        this.isAdmin = false;
-      }
+      this.isAdmin = user.rol === 'ADMIN';
       console.log(this.isAdmin);
     }
-
   }
 
   setActiveImage(index: number): void {
     this.activeImageIndex = index;
   }
 
-
-  getProductImages(product_id: number) {
-    this.imageService.getProductImages(product_id).subscribe({
-      next: (v) => {
-        this.productImages = v.body!;
-        console.log(this.productImages)
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
-  }
-
-  getProduct() {
-    this.product = this.productService.getProduct(this.gtin).subscribe({
+  getProductDetails(gtin: string) {
+    this.productService.getProduct(gtin).subscribe({
       next: (v) => {
         this.product = v.body;
-        this.category = this.categoryService.getCategory(this.product.category_id).subscribe({
+        this.getProductImages(this.product.product_id);
+        this.categoryService.getCategory(this.product.category_id).subscribe({
           next: (v) => {
             this.category = v.body?.category;
           },
           error: (e) => {
             console.log(e);
           }
-        })
+        });
+      },
+      error: (e) => {
+        console.log(e);
       }
-    })
+    });
+  }
+
+  getProductImages(product_id: number) {
+    this.imageService.getProductImages(product_id).subscribe({
+      next: (v) => {
+        this.productImages = v.body!;
+        console.log(this.productImages);
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
   }
 
   hideModalForm() {
@@ -161,30 +139,28 @@ export class DetalleComponent {
     }
     this.submitted = false;
     this.onSubmitUpdate();
-
   }
 
   onSubmitUpdate() {
     console.log(this.form.value);
-    this.productService.updateProduct(this.form.value, this.id).subscribe({
+    this.productService.updateProduct(this.form.value, this.productToUpdate).subscribe({
       next: (v) => {
-        this.swal.successMessage(v.body!.message); // show message
-        this.getProduct(); // reload products
-        this.hideModalForm(); // close modal
+        this.swal.successMessage(v.body!.message);
+        this.getProductDetails(this.gtin);
+        this.hideModalForm();
       },
       error: (e) => {
         console.error(e);
-        this.swal.errorMessage(e.error!.message); // show message
+        this.swal.errorMessage(e.error!.message);
       }
     });
   }
 
-  editarProducto() {
-    this.productService.getProduct(this.gtin).subscribe({
+  updateProduct(gtin: string) {
+    this.productService.getProduct(gtin).subscribe({
       next: (v) => {
         let product = v.body!;
-
-        this.id = product.product_id;
+        this.productToUpdate = product.product_id;
 
         this.form.reset();
         this.submitted = false;
@@ -200,7 +176,7 @@ export class DetalleComponent {
       },
       error: (e) => {
         console.log(e);
-        this.swal.errorMessage(e.error!.message); // show message
+        this.swal.errorMessage(e.error!.message);
       }
     });
   }
@@ -223,7 +199,7 @@ export class DetalleComponent {
     let cart = {
       gtin: this.gtin,
       quantity: this.productQuantity
-    }
+    };
 
     this.cartService.addToCart(cart).subscribe({
       next: (v) => {
@@ -235,7 +211,6 @@ export class DetalleComponent {
         this.swal.errorMessage(e.error!.message);
       }
     });
-
   }
 
   newImage($event: any) {
@@ -243,9 +218,9 @@ export class DetalleComponent {
       aspectRatio: 4 / 3,
       autoCropArea: 1
     }).subscribe((data) => {
-      console.log(data.base64)
+      console.log(data.base64);
       this.createProductImage(data.base64!);
-    })
+    });
   }
 
   createProductImage(image: string) {
@@ -254,46 +229,81 @@ export class DetalleComponent {
     productImage.image = image;
     this.imageService.createProductImage(productImage).subscribe({
       next: (v) => {
-        this.swal.successMessage("Image created"); // show message
-        this.getProductImages(this.product.product_id); // reload images
+        this.swal.successMessage("Imagen añadida");
+        this.getProductImages(this.product.product_id);
       },
       error: (e) => {
         console.error(e);
-        this.swal.errorMessage(e.error!.message); // show message
+        this.swal.errorMessage(e.error!.message);
       }
     });
   }
 
-  showImageModal() {
-    this.getProductImages(this.product.product_id)
-    $("#modalImages").modal("show");
-  }
-
-  deleteImage(id_image: number) {
-
+  deleteProductImage(productImage: ProductImage) {
     this.swal.confirmMessage.fire({
-      title: 'Please confirm you want to delete the image',
+      title: 'Favor de confirmar la eliminación de la imagen',
       icon: 'warning',
       showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonText: 'Confirm',
-      background: "#505050",
-      color: "white",
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar',
     }).then((result: any) => {
       if (result.isConfirmed) {
-        this.imageService.deleteProductImage(id_image).subscribe({
+        this.imageService.deleteProductImage(productImage.product_image_id).subscribe({
           next: (v) => {
-            this.swal.successMessage("The caregory has been disabled"); // show message
-            this.imageService.getProductImages(this.product.product_id);
-            this.getProductImages(this.product.product_id);
+            this.swal.successMessage(v.body!.message);
+            this.getProductImages(productImage.product_id);
           },
           error: (e) => {
             console.error(e);
-            this.swal.errorMessage("Can't delete the image"); // show message
+            this.swal.errorMessage(e.error!.message);
           }
         });
       }
     });
   }
-}
 
+  fileChangeHandler($event: any) {
+    this.ngxService.open($event, {
+      aspectRatio: 7 / 8,
+      autoCropArea: 1,
+      resizeToWidth: 315,
+      resizeToHeight: 360,
+    }).subscribe(data => {
+      this.createProductImage(data.base64!);
+    });
+  }
+
+  showModalForm() {
+    $("#modalForm").modal("show");
+    this.form.reset();
+    this.submitted = false;
+    this.productToUpdate = 0;
+  }
+
+  showProductModal(gtin: string) {
+
+    this.product = new Product();
+    this.productService.getProduct(gtin).subscribe({
+      next: (v) => {
+        this.product = v.body!;
+        $("#productModal").modal("show");
+      },
+      error: (e) => {
+        console.log(e);
+        this.swal.errorMessage(e.error!.message);
+      }
+    });
+  }
+
+  showImagesModal(id: number, productName: string) {
+    this.productNameImages = productName;
+    this.productToUpdate = id;
+    this.getProductImages(id);
+    $("#productModal").modal("hide");
+    $("#imagesModal").modal("show");
+  }
+  isSpecialProduct(): boolean {
+    return this.gtin === '7506584236956';
+  }
+
+}

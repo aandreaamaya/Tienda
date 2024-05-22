@@ -50,31 +50,37 @@ export class HomeComponent {
 
     if (localStorage.getItem('user')) {
       let user = JSON.parse(localStorage.getItem('user')!);
-      if (user.rol == 'ADMIN') {
-        this.isAdmin = true;
-      } else {
-        this.isAdmin = false;
-      }
-      console.log(this.isAdmin);
+      this.isAdmin = user.rol == 'ADMIN';
     }
-    this.getProducts();
 
+    this.getProducts();
   }
 
   getProducts() {
-    this.productService.getProductsByCategory(3).subscribe({
+    this.productService.getProducts().subscribe({
       next: (v) => {
-        this.products = v.body!;
-        console.log(this.products);
+        let allProducts = v.body!;
+        console.log(allProducts);
 
-        // Llamar al método para obtener la primera imagen de cada producto
+        // Filtrar solo el primer producto de cada categoría
+        let firstProductsByCategory: { [key: string]: DtoProductList } = {};
+
+        allProducts.forEach((product) => {
+          if (!firstProductsByCategory[product.category_id]) {
+            firstProductsByCategory[product.category_id] = product;
+          }
+        });
+
+        this.products = Object.values(firstProductsByCategory);
+
+        // Obtener la primera imagen de cada producto
         this.products.forEach((product) => {
           this.getFirstImageOfProducts(product.product_id);
         });
       },
       error: (e) => {
         console.log(e);
-        this.swal.errorMessage(e.error!.message); // mostrar mensaje
+        this.swal.errorMessage(e.error!.message);
       }
     });
   }
@@ -99,9 +105,18 @@ export class HomeComponent {
   }
 
 
-  seeMore() {
-
+  diormDetail(gtin: string): void {
+    this.router.navigate([`producto/categoria/1`]);
   }
+  diorDetail(gtin: string): void {
+    this.router.navigate([`producto-detalle/7506584236956`]);
+  }
+
+  chanelDetail(gtin: string): void {
+    this.router.navigate([`producto-detalle/5678612876181`]);
+  }
+
+
   showDetailAdmin(gtin: string) {
     //redirect to product detail
     // this.router.navigate(['/product/detail'], { queryParams: { gtin: gtin } });

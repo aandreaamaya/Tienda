@@ -24,15 +24,21 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="assets/images/missdiorcarrusel.png " class="d-block w-100 custom-carousel-image" alt="...">
+            <img src="assets/images/missdiorcarrusel.png" class="d-block w-100 custom-carousel-image" alt="..."
+                (click)="diorDetail(product)">
         </div>
-        <div class="carousel-item">
-            <img src="https://dummyimage.com/800x400/555/fff" class="d-block w-100 custom-carousel-image" alt="...">
+        <div class="carousel-item active">
+            <img src="assets/images/bleuchanel.png" class="d-block w-100 custom-carousel-image" alt="..."
+                (click)="chanelDetail(product)">
         </div>
-        <div class="carousel-item">
-            <img src="https://dummyimage.com/800x400/888/fff" class="d-block w-100 custom-carousel-image" alt="...">
+        <div class="carousel-item active">
+            <img src="assets/images/diorm.png" class="d-block w-100 custom-carousel-image" alt="..."
+                (click)="diormDetail(product) ">
         </div>
     </div>
+    
+
+
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -46,7 +52,7 @@
 <section class="py-5">
 <div class="container px-4 px-lg-5 mt-5">
     <div class="mb-4">
-        <h2>BESTSELLERS</h2>
+        <h2>Nuestros productos más vendidos</h2>
     </div>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
@@ -59,7 +65,7 @@
                         <div class="col-md-3">
                           <div class="card">
                               <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
-                              (click)="showDetailAdmin(product.gtin)" />
+                              (click)="showDetail(product.gtin)" />
                             <div class="card-body text-center">
                             </div>
                           </div>
@@ -93,15 +99,15 @@
 
                 <div class="col mb-5">
                     <div class="card h-100">
-                    <!-- Product image-->
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                        <div class="card">
-                            <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
-                            (click)="showDetail(product.gtin)" />
-                            <div class="card-body text-center">
+                        <!-- Product image-->
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="card">
+                                <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
+                                (click)="showDetail(product.gtin)" />
+                                <div class="card-body text-center">
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <!-- Product details-->

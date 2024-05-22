@@ -19,6 +19,7 @@
 
 .card {
   transition: transform 0.2s;
+  border: 0px;
 }
 
 .card:hover {
@@ -32,4 +33,12 @@
 
 .btn-back .ph-arrow-left {
   margin-right: 0.5rem;
+}
+.pt-5{
+  font-size: 2rem;
+  
+}
+.py-5{
+  font-size: large;
+  margin-top: -100px;
 }

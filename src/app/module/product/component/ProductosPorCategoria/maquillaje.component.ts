@@ -197,7 +197,7 @@ export class MaquillajeComponent implements OnInit {
     //redirect to product detail
     // this.router.navigate(['/product/detail'], { queryParams: { gtin: gtin } });
     console.log(gtin);
-    this.router.navigate([`product/${gtin}`]);
+    this.router.navigate([`producto-detalle/${gtin}`]);
   }
 
 
