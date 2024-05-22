@@ -7,7 +7,7 @@ import { ProductImageService } from '../product/_service/product-image.service';
 import { ProductImage } from '../product/_model/product-image';
 import { Router } from '@angular/router';
 import { CartService } from '../invoice/_service/cart.service';
-import { FormBuilder, Validators  } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -136,7 +136,7 @@ export class HomeComponent {
 
     this.cartService.addToCart(cart).subscribe({
       next: (v) => {
-        this.swal.successMessage("Product added to cart");
+        this.swal.successMessage("Product añadido al carrito!");
         this.cartService.getCount();
       },
       error: (e) => {

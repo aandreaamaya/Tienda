@@ -8,6 +8,6 @@ export class DtoProductList {
     status: number = 0;
     image: string = "";
 
-    
+
 
 }

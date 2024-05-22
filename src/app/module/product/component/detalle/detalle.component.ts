@@ -203,7 +203,7 @@ export class DetalleComponent implements OnInit {
 
     this.cartService.addToCart(cart).subscribe({
       next: (v) => {
-        let text = this.productQuantity > 1 ? "Products added to cart" : "Product added to cart";
+        let text = this.productQuantity > 1 ? "Productos añadidos al carrito!" : "Producto añadido al carrito!";
         this.swal.successMessage(text);
         this.cartService.getCount();
       },

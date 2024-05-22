@@ -9,6 +9,7 @@ import { HomeComponent } from '../../home/home.component';
 import { InvoiceComponent } from '../../invoice/component/invoice/invoice.component';
 import { MaquillajeComponent } from '../../product/component/ProductosPorCategoria/maquillaje.component';
 import { DetalleComponent } from '../../product/component/detalle/detalle.component';
+import { CartComponent } from '../../cart/cart.component';
 
 export const AppLayoutRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ export const AppLayoutRoutes: Routes = [
     { path: 'factura', component: InvoiceComponent },
     { path: 'producto/categoria/:category_id', component: MaquillajeComponent },
     { path: 'producto-detalle/:gtin', component: DetalleComponent },
+    { path: 'carrito', component: CartComponent },
     // {path: 'register', component: RegisterComponent},
     // {path: 'login', component: LoginComponent},
     { path: 'secured', component: SecuredComponent, canActivate: [authenticationGuard] }
