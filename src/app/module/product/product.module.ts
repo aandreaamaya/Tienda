@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { ProductComponent } from './component/product/product.component';
 import { DetalleComponent } from './component/detalle/detalle.component';
+import { AuthenticationModule } from "../authentication/authentication.module";
 @NgModule({
   declarations: [
     CategoryComponent,
@@ -17,7 +18,8 @@ import { DetalleComponent } from './component/detalle/detalle.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPhotoEditorModule
+    NgxPhotoEditorModule,
+    AuthenticationModule
   ]
 })
 export class ProductModule { }

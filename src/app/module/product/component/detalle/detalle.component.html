@@ -76,22 +76,42 @@
                 
 
                   @if(!isAdmin){
-                  <div class="btn-cont mt-5">
-                    <div class="quantity-selector-container card mt-2 text-center">
-                      <div class="quantity-selector d-inline-block">
-                          <button class="btn btn-small" (click)="quantityDown()"><i class="ph ph-minus"></i></button>
-                          <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
-                          <button class="btn btn-small" (click)="quantityUp()"><i class="ph ph-plus"></i></button>
+                    @if(loggedIn){
+                      <div class="btn-cont mt-5">
+                        <div class="quantity-selector-container card mt-2 text-center">
+                          <div class="quantity-selector d-inline-block">
+                              <button class="btn btn-small" (click)="quantityDown()"><i class="ph ph-minus"></i></button>
+                              <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
+                              <button class="btn btn-small" (click)="quantityUp()"><i class="ph ph-plus"></i></button>
+                          </div>
                       </div>
-                  </div>
+    
+                          <div class="shopping-cart-button-container mt-2">
+                              <button class="btn shopping-cart-button" (click)="addToCart()">
+                                  <i class="ph ph-shopping-bag icon-text-ul"></i>
+                                  <span>Añadir</span>
+                              </button>
+                          </div>
+                      </div>
+                    }@else {
+                      <div class="btn-cont mt-5">
+                        <div class="quantity-selector-container card mt-2 text-center">
+                          <div class="quantity-selector d-inline-block">
+                              <button class="btn btn-small" (click)="quantityDown()"><i class="ph ph-minus"></i></button>
+                              <input class="quantity-input" type="text" min="0" value="{{productQuantity}}" disabled>
+                              <button class="btn btn-small" (click)="quantityUp()"><i class="ph ph-plus"></i></button>
+                          </div>
+                      </div>
+    
+                          <div class="shopping-cart-button-container mt-2">
+                              <button class="btn shopping-cart-button" (click)="showLoginModal()">
+                                  <i class="ph ph-shopping-bag icon-text-ul"></i>
+                                  <span>Añadir (Inicia Sesion)</span>
+                              </button>
+                          </div>
+                      </div>
+                    }
 
-                      <div class="shopping-cart-button-container mt-2">
-                          <button class="btn shopping-cart-button" (click)="addToCart()">
-                              <i class="ph ph-shopping-bag icon-text-ul"></i>
-                              <span>Añadir</span>
-                          </button>
-                      </div>
-                  </div>
                   }@else {
                   <div class="admin-buttons-container">
                       <button class="btn admin-button" (click)="editarProducto()">
@@ -106,4 +126,22 @@
           </div>
       </div>
   </section>
+</div>
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="loginModal">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Iniciar sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <!-- Login component  -->
+          
+          <app-login></app-login>
+          
+      </div>
+    </div>
+  </div>
 </div>

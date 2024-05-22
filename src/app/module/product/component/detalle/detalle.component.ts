@@ -83,7 +83,7 @@ export class DetalleComponent {
     })
 
 
-    
+
     this.categoryService.getCategories().subscribe({
       next: (response) => {
         this.categories = response.body!;
@@ -227,7 +227,7 @@ export class DetalleComponent {
 
     this.cartService.addToCart(cart).subscribe({
       next: (v) => {
-        let text = this.productQuantity > 1 ? "Products added to cart" : "Product added to cart";
+        let text = this.productQuantity > 1 ? "Productos añadidos al carrito!" : "Producto añadido al carrito!";
         this.swal.successMessage(text);
         this.cartService.getCount();
       },
@@ -294,6 +294,10 @@ export class DetalleComponent {
         });
       }
     });
+  }
+
+  showLoginModal() {
+    $("#loginModal").modal("show");
   }
 }
 

@@ -16,12 +16,14 @@ import { HomeComponent } from './module/home/home.component';
 import { CommonModule } from '@angular/common'; 
 
 import { MaquillajeComponent } from './module/product/component/ProductosPorCategoria/maquillaje.component';
+import { CartComponent } from './module/cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MaquillajeComponent
+    MaquillajeComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

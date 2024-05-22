@@ -17,7 +17,7 @@ export class CartService {
     private http: HttpClient
   ) { }
 
-  getCount():void{
+  getCount(): void {
     this.getCart().subscribe(res => {
       let n = 0;
       res.body?.forEach((item) => {
@@ -36,12 +36,14 @@ export class CartService {
   }
 
   getCart(): Observable<HttpResponse<DtoCartDetails[]>> {
-    return this.http.get<DtoCartDetails[]>(api_dwb_uri + this.source , { observe: 'response' });
+    return this.http.get<DtoCartDetails[]>(api_dwb_uri + this.source, { observe: 'response' });
   }
 
-  /* REQUERIMIENTO 4. Implementar servicio Cart - función clearCart() */
-  clearCart() {}
+  deleteCart(): Observable<HttpResponse<ApiResponse>> {
+    return this.http.delete<ApiResponse>(api_dwb_uri + this.source, { observe: 'response' });
+  }
 
-  /* REQUERIMIENTO 4. Implementar servicio Cart - función removeFromCart() */
-  removeFromCart() {}
+  removeFromCart(cartId: number): Observable<HttpResponse<ApiResponse>> {
+    return this.http.delete<ApiResponse>(`${api_dwb_uri + this.source}/${cartId}`, { observe: 'response' });
+  }
 }

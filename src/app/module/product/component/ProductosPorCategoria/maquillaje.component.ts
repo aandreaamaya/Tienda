@@ -298,8 +298,8 @@ export class MaquillajeComponent implements OnInit {
     }
 
     this.cartService.addToCart(cart).subscribe({
-      next: (v) => {  
-        this.swal.successMessage("Product added to cart");
+      next: (v) => {
+        this.swal.successMessage("Producto añadido al carrito!");
         this.cartService.getCount();
       },
       error: (e) => {
