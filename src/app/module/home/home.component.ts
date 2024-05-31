@@ -81,6 +81,7 @@ export class HomeComponent {
       error: (e) => {
         console.log(e);
         this.swal.errorMessage(e.error!.message);
+        this.swal.errorMessage("Error al conectar con el servidor")
       }
     });
   }
