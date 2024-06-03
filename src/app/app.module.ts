@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 
 import { MaquillajeComponent } from './module/product/component/ProductosPorCategoria/maquillaje.component';
 import { CartComponent } from './module/cart/cart.component';
-
+import { InvoiceModule } from './module/invoice/invoice.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +33,8 @@ import { CartComponent } from './module/cart/cart.component';
     CommonsModule,     
     NgxPhotoEditorModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InvoiceModule
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))

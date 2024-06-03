@@ -31,8 +31,8 @@
                     <tr>
                         <td>{{ i + 1 }}</td>
                         <td>{{ invoice.invoice_id }}</td>
-                        <!-- <td>{{ invoice.total | currency: 'USD' }}</td>
-                        <td>{{ invoice.created_at | date: 'dd/MM/yyyy' }}</td> -->
+                        <td>${{ invoice.total}}</td>
+                        <td>{{ invoice.created_at}}</td>
 
                         <td>
                           <div class="dropdown">
@@ -44,9 +44,9 @@
         
                             <!-- menu options -->
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">
-                                    <i class="ph ph-eye icon-text-ul"></i>Ver detalles
-                                </a>
+                              <a class="dropdown-item" (click)="showDetail(invoice.invoice_id)">
+                                <i class="ph ph-eye icon-text-ul"></i>Ver detalles
+                              </a>
                             </div>
                           </div>
                         </td>

@@ -9,12 +9,16 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" *ngFor="let item of cartItems">
           <div class="card h-100">
-            <img [src]="item.image" class="card-img-top" alt="{{ item.product.product }}">
+            <img [src]="item.image" class="card-img-top" alt="{{ item.product.product }}" *ngIf="item.image; else noImage">
+            <ng-template #noImage>
+              <img src="path/to/default-image.jpg" class="card-img-top" alt="No image available">
+            </ng-template>
             <div class="card-body">
               <h5 class="card-title">{{ item.product.product }}</h5>
               <p class="card-text">Precio: ${{ item.product.price }}</p>
               <p class="card-text">Cantidad: {{ item.quantity }}</p>
               <button (click)="removeFromCart(item.cart_id)" class="btn btn-danger">Eliminar</button>
+              
             </div>
           </div>
         </div>
@@ -22,6 +26,31 @@
       <div class="mt-4">
         <h3>Subtotal: ${{ subtotal }}</h3>
         <button (click)="buyNow()" class="btn btn-success">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for displaying images -->
+<div class="modal fade" id="imagesModal" tabindex="-1" aria-labelledby="imagesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imagesModalLabel">{{productNameImages}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="productImages.length > 0; else noImages">
+          <div class="image-gallery">
+            <img *ngFor="let image of productImages; let i = index" [src]="image.image" (click)="setActiveImage(i)" [class.active]="i === activeImageIndex">
+          </div>
+          <div class="image-preview">
+            <img [src]="productImages[activeImageIndex]?.image" class="img-fluid">
+          </div>
+        </div>
+        <ng-template #noImages>
+          <p>No images available for this product.</p>
+        </ng-template>
       </div>
     </div>
   </div>
