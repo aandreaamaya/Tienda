@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
-.navbar{
+.navbar {
     padding: 8px;
+    background-color: #ffffff; /* Color personalizado */
     color: #000000;
-    background-color: #000000;
 }
+
 .navbar-custom {
     background-color: #ffffff; /* Color personalizado */
 }
 
-
-.navbar-brand{
+.navbar-brand {
     color: #000000;
     text-align: center;
     margin-top: 10px;
@@ -18,68 +18,66 @@
     font-size: 30px;
 }
 
-.navbar-content{
+.navbar-content {
     max-width: 1280px;
-    color: #000000;
-
     font-family: 'Rubik';
     margin: auto;
-    
-  }
+}
 
-.nav-logo{
+.nav-logo {
     width: 80px;
     height: 40px;
-
     margin-right: 20px;
     margin-left: 8px;
 }
 
-.nav-dropdown-menu{
+.nav-dropdown-menu {
     background-color: #ffffff;
-    border-radius: 0px;
+    border-radius: 8px; /* Añadir un borde redondeado */
     margin-bottom: 50px;
     border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadir sombra */
 }
 
-.nav-dropdown-item{
+.nav-dropdown-item {
     color: rgb(0, 0, 0) !important;
-    
 }
 
-.nav-dropdown-item:hover{
+.nav-dropdown-item:hover {
     background-color: rgb(173, 173, 173);
     color: rgb(100, 100, 100) !important;
 }
 
-.nav-dropdown-menu-user{
+.nav-dropdown-menu-user {
     margin-top: 9px;
     left: -150%;
     margin-bottom: 50px;
 }
 
-.nav-user-img{
+.nav-user-img {
     width: 32px;
 }
 
-.i-cart{
+.ph-user {
+    font-size: 28px;
+}
+
+.i-cart {
     color: rgb(0, 0, 0);
     font-size: 28px;
     vertical-align: middle;
     margin-right: 8px;
     margin-left: 24px;
-    margin-bottom: 50px;
 }
 
-.nav-link{ 
+.nav-link {
     cursor: pointer;
     color: #000000;
 }
 
-.nav-register{
+.nav-register {
     margin-left: 12px;
     color: #000000;
-
 }
 
 .search-form {
@@ -116,4 +114,73 @@
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
+}
+
+/* Estilos específicos para el dropdown del carrito */
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] {
+    width: 400px; /* Ajusta el ancho según sea necesario */
+    right: 0;
+    left: auto;
+    padding: 10px;
+    background-color: #ffffff; /* Asegúrate de que el fondo sea blanco */
+    color: #000000; /* Asegúrate de que el texto sea negro */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #ffffff; /* Asegúrate de que el fondo sea blanco */
+    color: #000000; /* Asegúrate de que el texto sea negro */
+    white-space: nowrap; /* Evitar que el texto se rompa */
+    overflow: hidden; /* Ocultar el desbordamiento */
+    text-overflow: ellipsis; /* Añadir puntos suspensivos al final */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item .item-details {
+    flex-grow: 1;
+    overflow: hidden;
+    color: #000000; /* Asegúrate de que el texto sea negro */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item .item-details h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #000000; /* Asegúrate de que el texto sea negro */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item .item-details p {
+    margin: 0;
+    font-size: 12px;
+    color: #777; /* Texto secundario en gris */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item .item-details span {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333; /* Asegúrate de que el texto sea oscuro */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-divider {
+    margin: 0;
+    background-color: #ddd; /* Asegúrate de que el divisor sea gris claro */
+}
+
+.navbar .dropdown-menu[aria-labelledby="navbarCartDropdown"] .dropdown-item.text-center {
+    padding: 10px 0;
+    background-color: #ffffff; /* Asegúrate de que el fondo sea blanco */
+    color: #000000; /* Asegúrate de que el texto sea negro */
 }

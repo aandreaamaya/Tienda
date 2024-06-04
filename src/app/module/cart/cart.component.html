@@ -1,8 +1,8 @@
 <div class="container mt-5">
-  <h2>Mi Carrito</h2>
+  <h2>Tu bolsa</h2>
   <div class="row">
     <div class="col-12" *ngIf="cartItems.length === 0">
-      <p>No hay productos en el carrito.</p>
+      <p>No hay productos en la bolsa.</p>
     </div>
     <div class="col-12" *ngIf="cartItems.length > 0">
       <div class="list-group">
@@ -13,42 +13,39 @@
             <p class="mb-1">Precio: ${{ item.product.price }}</p>
             <div class="quantity-selector d-inline-block">
               <button class="btn btn-small" (click)="quantityDown(item)"><i class="ph ph-minus"></i></button>
-              <input class="quantity-input form-control form-control-sm d-inline" type="text" min="0" [value]="item.quantity" disabled>
+              <input class="quantity-input" type="text" min="0" [value]="item.quantity" disabled>
               <button class="btn btn-small" (click)="quantityUp(item)"><i class="ph ph-plus"></i></button>
             </div>
-            <button class="btn btn-danger ms-2" (click)="removeFromCart(item.cart_id)">
-              <i class="ph ph-trash" style="font-size: 1.5rem;"></i>
-            </button>
           </div>
+          <button class="btn admin-button" (click)="removeFromCart(item.cart_id)">
+            <i class="ph ph-trash i-cart"></i>
+          </button>
         </div>
       </div>
-      <div class="mt-4 d-flex justify-content-between align-items-center">
-        <h3 class="mb-0">Subtotal: ${{ subtotal }}</h3>
-        <div>
-          <button (click)="deleteCart()" class="btn btn-danger me-2">Vaciar Carrito</button>
-          <button (click)="openBuyModal()" class="btn btn-success">Comprar</button>
-        </div>
+      <div class="mt-4 resumen-precios">
+        <h3>Subtotal: ${{ subtotal }}</h3>
+        <!-- <h3>Envío: ${{ shippingCost }}</h3>
+        <h3>Total: ${{ total }}</h3> -->
+        <button (click)="openBuyModal()" class="btn btn-success">Comprar</button>
+        <button (click)="deleteCart()" class="btn btn-danger">Vaciar Carrito</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal para confirmar la compra -->
+<!-- Modal de compra -->
 <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="buyModalLabel">Confirmar Compra</h5>
+        <h5 class="modal-title" id="buyModalLabel">Confirmar compra</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Tarjeta de Crédito: **** **** **** 1234</p>
         <p>Subtotal: ${{ subtotal }}</p>
-        <p>Fecha de Compra: {{ currentDate }}</p>
-        <button class="btn btn-success" (click)="buyNow()">Confirmar Compra</button>
+        <p>Tarjeta de crédito: **** **** **** 5678</p>
+        <button (click)="buyNow()" class="btn btn-primary">Confirmar compra</button>
       </div>
     </div>
   </div>
 </div>
-
-

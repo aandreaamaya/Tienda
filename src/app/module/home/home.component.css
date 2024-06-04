@@ -96,6 +96,15 @@
   width: 800px;
   object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsionarse */
 }
+.btn-shopping-cart-button {
+  background-color: #535353;
+  color: white;
+}
+
+.ph-shopping-bag:hover {
+  background-color: #999999;
+}
+
 
 body {
   margin: 0;
@@ -355,6 +364,7 @@ label {
 
 button {
   border-radius: 0;
+  background-color: #535353;
 }
 
 button:focus:not(:focus-visible) {
@@ -370,6 +380,7 @@ textarea {
 
   font-size: inherit;
   line-height: inherit;
+  
 }
 
 button,

@@ -1,65 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/_service/authentication.service';
-import { Category } from '../../../product/_model/category';
 import { CategoryService } from '../../../product/_service/category.service';
+import { CartService } from '../../../invoice/_service/cart.service';
+import { Category } from '../../../product/_model/category';
+import { DtoCartDetails } from '../../../invoice/_dto/dto-cart-details';
 import { SwalMessages } from '../../../commons/_dto/swal-messages';
-import { RegisterComponent } from '../../../authentication/register/register.component';
-import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 declare var $: any; // JQuery
 
 @Component({
   selector: 'app-navbar2',
   templateUrl: './navbar2.component.html',
-  styleUrl: './navbar2.component.css'
+  styleUrls: ['./navbar2.component.css']
 })
-export class Navbar2Component {
+export class Navbar2Component implements OnInit {
 
-  categories: Category[] = []; // categories list
-
+  categories: Category[] = [];
   loggedIn = false;
   isAdmin = false;
-
-  swal: SwalMessages = new SwalMessages(); // swal messages
+  cartItems: DtoCartDetails[] = [];
+  totalItems: number = 0;
+  swal: SwalMessages = new SwalMessages();
 
   constructor(
     private categoryService: CategoryService,
-    private servicioAutenticacion: AuthenticationService
-  ) { }
+    private authenticationService: AuthenticationService,
+    private cartService: CartService // Inyectar el servicio del carrito
+  ) {}
 
   ngOnInit() {
-    if (localStorage.getItem("token")) {
-      this.loggedIn = true;
-    }
-
-    if (localStorage.getItem("user")) {
-      let user = JSON.parse(localStorage.getItem("user")!);
-      if (user.rol == "ADMIN") {
-        this.isAdmin = true;
-      } else {
-        this.isAdmin = false;
-      }
-    }
-
+    this.checkLoginStatus();
     this.getCategories();
+    this.subscribeToCartUpdates();
+  }
+
+  checkLoginStatus() {
+    this.loggedIn = !!localStorage.getItem("token");
+    const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null;
+    this.isAdmin = user && user.rol === "ADMIN";
   }
 
   getCategories() {
     this.categoryService.getActiveCategories().subscribe({
-      next: (v) => {
-        this.categories = v.body!;
+      next: (response) => {
+        this.categories = response.body!;
       },
       error: (e) => {
-        console.log(e);
-        this.swal.errorMessage(e.error!.message); // show message
+        console.error(e);
+        this.swal.errorMessage(e.error!.message);
       }
     });
   }
 
+  subscribeToCartUpdates() {
+    this.cartService.getCartObservable().subscribe(cartItems => {
+      this.cartItems = cartItems;
+      this.totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    });
+  }
 
   logout() {
-    this.servicioAutenticacion.logOut();
+    this.authenticationService.logOut();
     this.loggedIn = false;
     window.location.reload();
   }
@@ -74,15 +75,11 @@ export class Navbar2Component {
 
   closeRegistrationModal() {
     $("#registerModal").modal("hide");
-
   }
 
   handleRegistrationSuccess(event: boolean) {
     if (event) {
-      // Si el registro es exitoso, cierra el modal
       this.closeRegistrationModal();
     }
   }
-
-
 }

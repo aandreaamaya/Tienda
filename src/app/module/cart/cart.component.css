@@ -7,8 +7,20 @@
     padding: 0.25rem 0.5rem;
   }
   
-  .ph-trash {
 
-    width: 500px
-  }
-  
+  .resumen-precios h3 {
+    font-size: 1.25rem; /* Ajusta el tamaño de la fuente según sea necesario */
+    font-weight: normal; /* Opcional: ajusta el peso de la fuente si es necesario */
+}
+
+.modal-body p {
+    font-size: 1rem; /* Ajusta el tamaño de la fuente según sea necesario */
+    font-weight: normal; /* Opcional: ajusta el peso de la fuente si es necesario */
+}
+.i-cart {
+  color: rgb(0, 0, 0);
+  font-size: 28px;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-left: 24px;
+}

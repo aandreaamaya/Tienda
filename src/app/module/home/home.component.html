@@ -1,124 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="home.component.css" rel="stylesheet" />
-    </head>
-    <body>
-       
-<!-- Carousel -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="assets/images/missdiorcarrusel.png" class="d-block w-100 custom-carousel-image" alt="..."
-                (click)="diorDetail(product)">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="home.component.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Carousel -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-item active">
-            <img src="assets/images/bleuchanel.png" class="d-block w-100 custom-carousel-image" alt="..."
-                (click)="chanelDetail(product)">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/images/missdiorcarrusel.png" class="d-block w-100 custom-carousel-image" alt="..." (click)="diorDetail(product)">
+            </div>
+            <div class="carousel-item active">
+                <img src="assets/images/bleuchanel.png" class="d-block w-100 custom-carousel-image" alt="..." (click)="chanelDetail(product)">
+            </div>
+            <div class="carousel-item active">
+                <img src="assets/images/diorm.png" class="d-block w-100 custom-carousel-image" alt="..." (click)="diormDetail(product)">
+            </div>
         </div>
-        <div class="carousel-item active">
-            <img src="assets/images/diorm.png" class="d-block w-100 custom-carousel-image" alt="..."
-                (click)="diormDetail(product) ">
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    
 
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<section class="py-5">
-<div class="container px-4 px-lg-5 mt-5">
-    <div class="mb-4">
-        <h2>Nuestros productos más vendidos</h2>
-    </div>
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-        @for(product of products; track product; let i = $index ) {
-            @if(isAdmin){
-                <div class="col mb-5">
-                    <div class="card h-100">
-                      <!-- Product image-->
-                      <div class="row g-3">
-                        <div class="col-md-3">
-                          <div class="card">
-                              <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
-                              (click)="showDetail(product.gtin)" />
-                            <div class="card-body text-center">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Product details-->
-                      <div class="card-body p-4">
-                        <div class="text-center">
-                          <!-- Product name-->
-                          <h5 class="fw-bolder">{{product.product}}</h5>
-                          <!-- Product price-->
-                          ${{product.price}}
-                          <div class="add-cart-container"><a class="btn btn-cart" (click)="addToCart(product.gtin)"><i
-                            class="button"></i> <span>Añadir</span></a></div>
-                        </div>
-                        </div>
-                  </div>
-                </div>
-            }@else{
-
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <div class="row g-3">
-                            <div class="col-md-3">
-                                <div class="card">
-                                <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}"
-                                (click)="showDetail(product.gtin)" />
-                                <div class="card-body text-center">
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="mb-4">
+                <h2>Nuestros productos más vendidos</h2>
+            </div>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @for(product of products; track product; let i = $index ) {
+                    @if(isAdmin) {
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Product image-->
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}" (click)="showDetail(product.gtin)" />
+                                            <div class="card-body text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{product.product}}</h5>
+                                        <!-- Product price-->
+                                        ${{product.price}}
+                                        <div class="add-cart-container">
+                                            <a class="btn btn-cart custom-cart-button" (click)="addToCart(product.gtin)">
+                                                <i class="ph ph-shopping-bag icon-text-ul"></i> <span>Añadir</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">{{product.product}}</h5>
-                        <!-- Product price-->
-                        ${{product.price}}
-                        <div class="add-cart-container"><a class="btn btn-cart" (click)="addToCart(product.gtin)"><i
-                            class="button"></i> <span>Añadir</span></a></div>
+                    } @else {
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Product image-->
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}" (click)="showDetail(product.gtin)" />
+                                            <div class="card-body text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{product.product}}</h5>
+                                        <!-- Product price-->
+                                        ${{product.price}}
+                                        <div class="add-cart-container">
+                                            <a class="btn shopping-cart-button custom-cart-button" (click)="addToCart(product.gtin)">
+                                                <i class="ph ph-shopping-bag icon-text-ul"></i> <span>Añadir</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                </div>
-            }
-        }
-    </div>    
-   
-</div>
-
-</section>
-        
-    </body>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+</body>
 </html>

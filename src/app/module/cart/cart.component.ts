@@ -7,7 +7,7 @@ import { InvoiceService } from '../invoice/_service/invoice.service';
 import { ApiResponse } from '../commons/_dto/api-response';
 import { ProductImageService } from '../product/_service/product-image.service';
 
-declare var bootstrap: any;
+declare var $: any; // JQuery
 
 @Component({
   selector: 'app-cart',
@@ -102,13 +102,15 @@ export class CartComponent implements OnInit {
   }
 
   openBuyModal(): void {
-    const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
-    buyModal.show();
+    // const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
+    // buyModal.show();
+    $("#buyModal").modal("show");
   }
 
   hideBuyModal(): void {
-    const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
-    buyModal.hide();
+    // const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
+    // buyModal.hide();
+    $("#buyModal").modal("hide");
   }
 
   buyNow(): void {
@@ -116,10 +118,9 @@ export class CartComponent implements OnInit {
     this.invoiceService.generateInvoice().subscribe(
       (res) => {
         this.cartService.deleteCart()
-
-        this.router.navigate(['compra']); // Redirigir a la página de compra exitosa
         this.hideBuyModal()
-
+        this.router.navigate(['compra']); // Redirigir a la página de compra exitosa
+        
       },
       (err) => {
         this.swal.errorMessage('Error al generar la factura');

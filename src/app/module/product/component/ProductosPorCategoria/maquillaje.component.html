@@ -13,12 +13,7 @@
     <span> Regresar</span>
   </button>
 
-  <div *ngIf="isAdmin" class="py-4 text-center">
-    <button type="button" class="btn btn-dark" (click)="showModalForm()">
-      <i class="ph ph-plus"></i>
-      <span>Agregar</span>
-    </button>
-  </div>
+
   
   <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -45,7 +40,7 @@
             </div>
 
             <!-- Add to cart / Out of stock -->
-            <div *ngIf="product.stock > 0" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div  class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center">
                 <a class="btn btn-cart" (click)="addToCart(product.gtin)">
                   <i class="ph ph-shopping-bag"></i>
@@ -53,9 +48,7 @@
                 </a>
               </div>
             </div>
-            <div *ngIf="product.stock === 0" class="card-footer p-3 pt-0 border-top-0 bg-transparent">
-              <div class="text-center text-danger">Agotado</div>
-            </div>
+            
           </div>
         </div>
       </ng-container>
