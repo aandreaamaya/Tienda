@@ -18,12 +18,14 @@ import { CommonModule } from '@angular/common';
 import { MaquillajeComponent } from './module/product/component/ProductosPorCategoria/maquillaje.component';
 import { CartComponent } from './module/cart/cart.component';
 import { InvoiceModule } from './module/invoice/invoice.module';
+import { CompraComponent } from './module/cart/compra/compra.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MaquillajeComponent,
-    CartComponent
+    CartComponent,
+    CompraComponent
   ],
   imports: [
     BrowserModule,

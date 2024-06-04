@@ -5,53 +5,50 @@
       <p>No hay productos en el carrito.</p>
     </div>
     <div class="col-12" *ngIf="cartItems.length > 0">
-      <button (click)="deleteCart()" class="btn btn-danger mb-3">Vaciar Carrito</button>
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" *ngFor="let item of cartItems">
-          <div class="card h-100">
-            <img [src]="item.image" class="card-img-top" alt="{{ item.product.product }}" *ngIf="item.image; else noImage">
-            <ng-template #noImage>
-              <img src="path/to/default-image.jpg" class="card-img-top" alt="No image available">
-            </ng-template>
-            <div class="card-body">
-              <h5 class="card-title">{{ item.product.product }}</h5>
-              <p class="card-text">Precio: ${{ item.product.price }}</p>
-              <p class="card-text">Cantidad: {{ item.quantity }}</p>
-              <button (click)="removeFromCart(item.cart_id)" class="btn btn-danger">Eliminar</button>
-              
+      <div class="list-group">
+        <div class="list-group-item d-flex align-items-center" *ngFor="let item of cartItems">
+          <img [src]="item.image" class="img-thumbnail me-3" alt="{{ item.product.product }}" style="width: 50px; height: 50px;">
+          <div class="flex-grow-1">
+            <h5 class="mb-1">{{ item.product.product }}</h5>
+            <p class="mb-1">Precio: ${{ item.product.price }}</p>
+            <div class="quantity-selector d-inline-block">
+              <button class="btn btn-small" (click)="quantityDown(item)"><i class="ph ph-minus"></i></button>
+              <input class="quantity-input form-control form-control-sm d-inline" type="text" min="0" [value]="item.quantity" disabled>
+              <button class="btn btn-small" (click)="quantityUp(item)"><i class="ph ph-plus"></i></button>
             </div>
+            <button class="btn btn-danger ms-2" (click)="removeFromCart(item.cart_id)">
+              <i class="ph ph-trash" style="font-size: 1.5rem;"></i>
+            </button>
           </div>
         </div>
       </div>
-      <div class="mt-4">
-        <h3>Subtotal: ${{ subtotal }}</h3>
-        <button (click)="buyNow()" class="btn btn-success">Comprar</button>
+      <div class="mt-4 d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Subtotal: ${{ subtotal }}</h3>
+        <div>
+          <button (click)="deleteCart()" class="btn btn-danger me-2">Vaciar Carrito</button>
+          <button (click)="openBuyModal()" class="btn btn-success">Comprar</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal for displaying images -->
-<div class="modal fade" id="imagesModal" tabindex="-1" aria-labelledby="imagesModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<!-- Modal para confirmar la compra -->
+<div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="imagesModalLabel">{{productNameImages}}</h5>
+        <h5 class="modal-title" id="buyModalLabel">Confirmar Compra</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div *ngIf="productImages.length > 0; else noImages">
-          <div class="image-gallery">
-            <img *ngFor="let image of productImages; let i = index" [src]="image.image" (click)="setActiveImage(i)" [class.active]="i === activeImageIndex">
-          </div>
-          <div class="image-preview">
-            <img [src]="productImages[activeImageIndex]?.image" class="img-fluid">
-          </div>
-        </div>
-        <ng-template #noImages>
-          <p>No images available for this product.</p>
-        </ng-template>
+        <p>Tarjeta de Crédito: **** **** **** 1234</p>
+        <p>Subtotal: ${{ subtotal }}</p>
+        <p>Fecha de Compra: {{ currentDate }}</p>
+        <button class="btn btn-success" (click)="buyNow()">Confirmar Compra</button>
       </div>
     </div>
   </div>
 </div>
+
+

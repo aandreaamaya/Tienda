@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Importar el Router
 import { CartService } from '../invoice/_service/cart.service';
 import { DtoCartDetails } from '../invoice/_dto/dto-cart-details';
 import { SwalMessages } from '../commons/_dto/swal-messages';
-import { InvoiceService } from '../invoice/_service/invoice.service'; // Import InvoiceService
-import { ApiResponse } from '../commons/_dto/api-response'; // Import ApiResponse
-import { ProductImageService } from '../product/_service/product-image.service'; // Import ProductImageService
-import { ProductImage } from '../product/_model/product-image';
+import { InvoiceService } from '../invoice/_service/invoice.service';
+import { ApiResponse } from '../commons/_dto/api-response';
+import { ProductImageService } from '../product/_service/product-image.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-cart',
@@ -16,14 +18,13 @@ export class CartComponent implements OnInit {
   cartItems: DtoCartDetails[] = [];
   swal: SwalMessages = new SwalMessages();
   subtotal: number = 0;
-  productImages: ProductImage[] = [];
-  activeImageIndex = 0;
-  productNameImages: string = "";
+  currentDate: string = new Date().toLocaleDateString();
 
   constructor(
     private cartService: CartService, 
     private invoiceService: InvoiceService,
-    private imageService: ProductImageService // Inject ProductImageService
+    private productImageService: ProductImageService, // Inyectar ProductImageService
+    private router: Router // Inyectar el Router
   ) { }
 
   ngOnInit(): void {
@@ -34,8 +35,30 @@ export class CartComponent implements OnInit {
     this.cartService.getCart().subscribe(response => {
       if (response.body) {
         this.cartItems = response.body;
-        this.calculateSubtotal(this.cartItems); // Calculate the subtotal using the retrieved cart data
-        console.log(this.cartItems);
+        this.calculateSubtotal(this.cartItems); // Calcular el subtotal usando los datos obtenidos del carrito
+        console.log('Elementos del carrito:', this.cartItems); // Línea de depuración para verificar los elementos del carrito
+        this.cartItems.forEach(item => {
+          this.getFirstImageOfProducts(item.product.product_id); // Cargar y asignar la primera imagen de cada producto
+        });
+      }
+    });
+  }
+
+  getFirstImageOfProducts(product_id: number) {
+    this.productImageService.getProductImages(product_id).subscribe({
+      next: (v) => {
+        const productImages = v.body! || [];
+        console.log(productImages);
+
+        // Encuentra el producto en el carrito y asigna la primera imagen
+        const cartItemIndex = this.cartItems.findIndex(item => item.product.product_id === product_id);
+        if (cartItemIndex !== -1 && productImages.length > 0) {
+          this.cartItems[cartItemIndex].image = productImages[0].image;
+        }
+      },
+      error: (e) => {
+        console.log(e);
+        this.swal.errorMessage(e.error!.message); // Mostrar mensaje de error
       }
     });
   }
@@ -56,7 +79,7 @@ export class CartComponent implements OnInit {
       if (response.body) {
         this.swal.successMessage("Producto eliminado del carrito");
         this.cartItems = this.cartItems.filter(item => item.cart_id !== cartId);
-        this.calculateSubtotal(this.cartItems); // Recalculate the subtotal after removing an item
+        this.calculateSubtotal(this.cartItems); // Recalcular el subtotal después de eliminar un ítem
         this.cartService.getCount();
       }
     });
@@ -66,50 +89,37 @@ export class CartComponent implements OnInit {
     this.subtotal = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   }
 
+  quantityUp(item: DtoCartDetails): void {
+    item.quantity++;
+    this.calculateSubtotal(this.cartItems);
+  }
+
+  quantityDown(item: DtoCartDetails): void {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.calculateSubtotal(this.cartItems);
+    }
+  }
+
+  openBuyModal(): void {
+    const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
+    buyModal.show();
+  }
+
   buyNow(): void {
-    console.log("Attempting to finish purchase");
-    this.swal.confirmMessage.fire({
-      title: 'Estas a punto de confirmar tu compra',
-      background: '#fffff',
-      color: 'gray',
-      showConfirmButton: true,
-      confirmButtonText: 'Confirmar',
-    }).then((result: any) => {
-      if (result.isConfirmed) {
-        this.invoiceService.generateInvoice().subscribe(
-          (res) => {
-            this.swal.successMessage('Invoice generated successfully');
-            this.cartService.deleteCart().subscribe(() => {
-              console.log("Cart successfully deleted");
-              this.cartService.getCount();
-              this.loadCart();
-            });
-          },
-          (err) => {
-            this.swal.errorMessage('Error generating invoice');
-          }
-        );
-      }
-    });
-  }
-
-  // Method to load product images
-  getProductImages(product_id: number) {
-    this.imageService.getProductImages(product_id).subscribe({
-      next: (v) => {
-        this.productImages = v.body!;
-        console.log(this.productImages);
+    console.log("Intentando finalizar la compra");
+    this.invoiceService.generateInvoice().subscribe(
+      (res) => {
+        this.cartService.deleteCart().subscribe(() => {
+          console.log("Carrito eliminado con éxito");
+          this.cartService.getCount();
+          this.loadCart();
+          this.router.navigate(['compra']); // Redirigir a la página de compra exitosa
+        });
       },
-      error: (e) => {
-        console.log(e);
+      (err) => {
+        this.swal.errorMessage('Error al generar la factura');
       }
-    });
+    );
   }
-
-  // Method to set active image index
-  setActiveImage(index: number): void {
-    this.activeImageIndex = index;
-  }
-
-
 }

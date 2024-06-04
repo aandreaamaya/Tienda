@@ -137,11 +137,11 @@ export class HomeComponent {
 
     this.cartService.addToCart(cart).subscribe({
       next: (v) => {
-        this.swal.successMessage("Product añadido al carrito!");
+        this.swal.successMessage("Producto añadido al carrito");
         this.cartService.getCount();
       },
       error: (e) => {
-        this.swal.errorMessage(e.error!.message);
+        this.swal.errorMessage("Primero inicia sesión");
       }
     });
 

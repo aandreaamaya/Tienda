@@ -11,6 +11,8 @@ import { MaquillajeComponent } from '../../product/component/ProductosPorCategor
 import { DetalleComponent } from '../../product/component/detalle/detalle.component';
 import { CartComponent } from '../../cart/cart.component';
 import { InvoiceDetailsComponent } from '../../invoice/invoice-details/invoice-details.component';
+import { CompraComponent } from '../../cart/compra/compra.component';
+
 export const AppLayoutRoutes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'categoria', component: CategoryComponent },
@@ -22,6 +24,7 @@ export const AppLayoutRoutes: Routes = [
     { path: 'producto-detalle/:gtin', component: DetalleComponent },
     { path: 'carrito', component: CartComponent },
     { path: "factura/:id", component: InvoiceDetailsComponent },
+    { path: 'compra', component: CompraComponent },
     // {path: 'register', component: RegisterComponent},
     // {path: 'login', component: LoginComponent},
     { path: 'secured', component: SecuredComponent, canActivate: [authenticationGuard] }
