@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   currentDate: string = new Date().toLocaleDateString();
 
   constructor(
-    private cartService: CartService, 
+    private cartService: CartService,
     private invoiceService: InvoiceService,
     private productImageService: ProductImageService, // Inyectar ProductImageService
     private router: Router // Inyectar el Router
@@ -106,16 +106,20 @@ export class CartComponent implements OnInit {
     buyModal.show();
   }
 
+  hideBuyModal(): void {
+    const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
+    buyModal.hide();
+  }
+
   buyNow(): void {
     console.log("Intentando finalizar la compra");
     this.invoiceService.generateInvoice().subscribe(
       (res) => {
-        this.cartService.deleteCart().subscribe(() => {
-          console.log("Carrito eliminado con éxito");
-          this.cartService.getCount();
-          this.loadCart();
-          this.router.navigate(['compra']); // Redirigir a la página de compra exitosa
-        });
+        this.cartService.deleteCart()
+
+        this.router.navigate(['compra']); // Redirigir a la página de compra exitosa
+        this.hideBuyModal()
+
       },
       (err) => {
         this.swal.errorMessage('Error al generar la factura');
