@@ -1,0 +1,57 @@
+<div class="text-center pt-5">
+  <h2 *ngIf="categoryShowing === 1">Maquillaje</h2>
+  <h2 *ngIf="categoryShowing === 2">Cuidado de la piel</h2>
+  <h2 *ngIf="categoryShowing === 3">Perfumes</h2>
+  <h2 *ngIf="categoryShowing === 4">Uñas</h2>
+  <h2 *ngIf="categoryShowing !== 1 && categoryShowing !== 2 && categoryShowing !== 3 && categoryShowing !== 4">Otra Categoría</h2>
+</div>
+
+<!-- Section-->
+<section class="py-5">
+  <button class="btn btn-back mb-4" (click)="goBack()">
+    <i class="ph ph-arrow-left"></i>
+    <span> Regresar</span>
+  </button>
+
+
+  
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <ng-container *ngFor="let product of products; let i = index">
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top product-img" [src]="product.image" alt="{{product.product}}" 
+              (click)="isAdmin ? showDetailAdmin(product.gtin) : showDetail(product.gtin)" />
+
+            <!-- Product details-->
+            <div class="card-body p-4 text-center">
+              <h5 class="fw-bolder">{{ product.product }}</h5>
+              <div class="d-flex justify-content-center small mb-2">
+                <!-- Rating stars (if available) -->
+                <!-- <i class="bi bi-star-fill text-warning"></i>
+                <i class="bi bi-star-fill text-warning"></i>
+                <i class="bi bi-star-fill text-warning"></i>
+                <i class="bi bi-star-fill text-warning"></i>
+                <i class="bi bi-star-fill text-warning"></i> -->
+              </div>
+              <span>${{ product.price }}</span>
+              
+            </div>
+
+            <!-- Add to cart / Out of stock -->
+            <div  class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <a class="btn btn-cart" (click)="addToCart(product.gtin)">
+                  <i class="ph ph-shopping-bag"></i>
+                  <span>Añadir</span>
+                </a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

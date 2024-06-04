@@ -1,0 +1,234 @@
+<div class="card border-light mb-3">
+
+  <!-- Card header -->
+
+  <div class="card-header">
+    <div class="row">
+        <div class="col">
+          <h4>Listado de productos</h4>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-primary" style="float: right;" (click)="showModalForm()">
+            <i class="ph ph-plus-circle"></i>
+            Agregar producto
+          </button>
+        </div>
+    </div>
+  </div>
+
+  <!-- Card body -->
+
+  <div class="card-body">
+
+      <!-- Region table  -->
+
+      <table class="table">
+          <thead class="thead-dark">
+            <tr class="table-primary">
+                <th>Id</th>
+                <th>Gtin</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Estatus</th>
+                <th>Más</th>
+            </tr>
+          </thead>
+          <tbody>
+              @for(product of products; track product; let i = $index ) {
+                  <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ product.gtin }}</td>
+                      <td>{{ product.product }}</td>
+                      <td>{{ product.price }}</td>
+                      <td>
+                        <div class="td-status" [ngClass]="{'td-status-enable': product.status == 1, 'td-status-disable': product.status == 0}" >
+                          {{ product.status == 0 ? "Inactivo" : "Activo" }}
+                          </div>
+                      </td>
+
+                      <td>
+                        <div class="dropdown">
+                          <!-- dots button  -->
+                          <button class="dropdown-button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ph ph-dots-three-outline-vertical icon-menu"></i>
+                          </button>
+      
+                          <!-- menu options -->
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @if(product.status != 0){
+                              <a class="dropdown-item" (click)="updateProduct(product.gtin)">
+                                <i class="ph ph-note-pencil icon-text-ul"></i>Editar
+                              </a>
+                              <a class="dropdown-item" (click)="showProductModal(product.gtin)">
+                                <i class="ph ph-eye icon-text-ul"></i>Ver detalles
+                              </a>
+                              <a class="dropdown-item" (click)="showImagesModal(product.product_id, product.product)">
+                                <i class="ph ph-image icon-text-ul"></i>Ver imágenes
+                              </a>
+                              
+                              <a class="dropdown-item disable-item" (click)="disableProduct(product.product_id)">
+                                <i class="ph ph-x-circle icon-text-ul"></i>Desactivar
+                              </a>
+                            }@else {
+                              <a class="dropdown-item enable-item" (click)="enableProduct(product.product_id)">
+                                <i class="ph ph-check-circle icon-text-ul"></i>Activar
+                              </a>
+                            }
+                          </div>
+                        </div>
+                      </td>
+                  </tr>
+              }
+          </tbody>
+      </table>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="modalForm">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalles del Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
+          <div class="mb-3">
+            <label for="gtin" class="form-label">GTIN <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="gtin" id="gtin" placeholder="Código GTIN del producto...">
+            <div *ngIf="form.controls['gtin'].errors && submitted" class="invalid-feedback">
+              Favor de ingresar un código GTIN válido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="product" class="form-label">Producto <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="product" id="product" placeholder="Nombre del producto...">
+            <div *ngIf="form.controls['product'].errors && submitted" class="invalid-feedback">
+              Favor de ingresar un nombre de producto válido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Precio <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="price" id="price" placeholder="Precio del producto...">
+            <div *ngIf="form.controls['price'].errors && submitted" class="invalid-feedback">
+              Favor de ingresar un precio válido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="stock" class="form-label">Cantidad de productos <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="stock" id="stock" placeholder="Número de stock del producto...">
+            <div *ngIf="form.controls['stock'].errors && submitted" class="invalid-feedback">
+              Favor de ingresar un número de stock válido
+            </div>
+          </div>
+
+          <select class="form-select" *ngIf="categories && categories.length > 0" formControlName="category_id" id="category_id">
+            <option value="" hidden>Selecciona una categoría...</option>
+            <ng-container *ngFor="let category of categories">
+              <option [value]="category.category_id">{{ category.category }}</option>
+            </ng-container>
+          </select>
+          <div *ngIf="!categories || categories.length === 0">Cargando categorías...</div>
+          
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción <span class="text-danger">*</span></label>
+            <textarea rows="3" class="form-control" formControlName="description" id="description" placeholder="Descripción del producto..."></textarea>
+            <div *ngIf="form.controls['description'].errors && submitted" class="invalid-feedback">
+              Favor de ingresar una descripción válida
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product modal -->
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="productModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalles del Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">  <!-- Updated class for spacing -->
+          <!-- Product details displayed in a more compact form -->
+          <div class="col-md-6">
+            <label class="form-label"><strong>Producto:</strong></label>
+            <p>{{ product.product }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label"><strong>GTIN:</strong></label>
+            <p>{{ product.gtin }}</p>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><strong>Precio:</strong></label>
+            <p>{{ product.price | currency: 'USD' }}</p>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><strong>Cantidad en Stock:</strong></label>
+            <p>{{ product.stock }}</p>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><strong>Categoría:</strong></label>
+            <p>{{ product.category_id }}</p>
+          </div>
+          <div class="col-12">
+            <label class="form-label"><strong>Descripción:</strong></label>
+            <p>{{ product.description }}</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">  <!-- Flexbox for alignment -->
+          <!-- Button for viewing images -->
+          <button type="button" class="btn btn-primary" (click)="showImagesModal(this.product.product_id, this.product.product)">
+            <i class="ph ph-image"></i> Ver imágenes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="imagesModal">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ productNameImages }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="upload-area text-center mb-4">
+          <label for="uploadImage" class="btn btn-primary">
+            <i class="ph ph-plus-circle"></i> Agregar imagen
+            <input type="file" (change)="fileChangeHandler($event)" id="uploadImage" hidden>
+          </label>
+        </div>
+        
+        <div class="row g-3">
+          @for (image of images; track $index) {
+            <div class="col-md-3">
+              <div class="card">
+                <img src="{{ image.image }}" class="card-img-top" alt="Image Description">
+                <div class="card-body text-center">
+                  <button type="button" class="btn btn-danger" (click)="deleteProductImage(image)">
+                    <i class="ph ph-trash"></i> Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

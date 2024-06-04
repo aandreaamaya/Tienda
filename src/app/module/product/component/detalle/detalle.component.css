@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+p{
+    font-family: 'Rubik', sans-serif;
+    color: #555555;
+    font-size: auto;
+    
+}
+.title {
+    font-size: 30px;
+    font-weight: 100;
+}
+
+
+h1{
+    content: center;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    color: rgb(179, 0, 74);
+    
+}
+h1 p{
+    font-size: 10px;
+}
+h2 {
+    content: center;
+    font-family: 'Rubik', sans-serif;
+    font-size: 50px;
+    color: rgb(179, 0, 74);
+    font-weight: 400;
+    font-stretch: ultra-expanded;
+
+}
+h3 {
+    font-size: 20px;
+    font-weight: 100;
+}
+.special-product-details h2{
+    font-size: 20px;
+    font-weight: 100;
+    font-family: 'Rubik', sans-serif;
+    color: #000000;
+}
+.special-product-details h3{
+    font-size: 15px;
+}
+
+.special-product-details .text-center p{
+    margin-left: 10px;
+    font-size: 10px;
+}
+.special-product-details .text-wrap p{
+    font-size: 20px;
+}
+
+.special-product-details .stock-available{
+    padding-top: 1rem;
+}
+.card {
+    border: 0;
+    padding-top: 0.1em;
+    padding-bottom: 0;
+}
+
+.carousel-container .carousel-inner {
+    padding-top: -10px;
+    overflow: hidden;
+    height: auto; 
+    width: auto;
+}
+
+.carousel-container .carousel-inner img.product-image {
+    height: 300px; /* Ajusta la altura según sea necesario */
+    width: auto; /* Ajusta el ancho para mantener la proporción */
+    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+    object-position: center; /* Centrar la imagen */
+    border-radius: 5px;
+    image-rendering: -webkit-optimize-contrast; /* Mejora la calidad en navegadores webkit */
+    image-rendering: crisp-edges; /* Mantiene los bordes nítidos */
+}
+
+.special-product-details .special-product-image {
+    height: 300px; /* Ajusta la altura según sea necesario */
+    width: auto; /* Ajusta el ancho para mantener la proporción */
+    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+    object-position: center; /* Centrar la imagen */
+    border-radius: 5px;
+    image-rendering: -webkit-optimize-contrast; /* Mejora la calidad en navegadores webkit */
+    image-rendering: crisp-edges; /* Mantiene los bordes nítidos */
+}
+
+.product-info-container {
+    padding: 20px;
+    font-family: 'Rubik', sans-serif;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.product-info-container .title {
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.product-info-container .product-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.product-info-container .details-label {
+    font-weight: bold;
+}
+
+.product-info-container .paragraph {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.button-show-more {
+    color: #797979;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.btn-cont .shopping-cart-button {
+    width: 100%;
+    background-color: #686868;
+    color: white;
+}
+
+.btn-cont .shopping-cart-button:hover {
+    background-color: #494949;
+}
+
+.admin-button {
+    background-color: #868686;
+    color: white;
+    margin-right: 10px;
+    margin-bottom: 50px;
+}
+
+.admin-button:hover {
+    background-color: #a0a0a0;
+}
+
+.stock-available {
+    color: rgb(126, 126, 126);
+    margin-top: -20px;
+    font-size: small;
+}
+
+.stock-out {
+    color: rgb(63, 41, 41);
+    margin-top: -20px;
+    font-size: small;
+}
+
+.quantity-selector-container {
+    display: flex;
+    justify-content: center;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 50px;
+}
+.text-wrap{
+    margin-top: 50px;
+}
+.modal-content {
+    background-color: #fff; /* Fondo blanco para limpieza visual */
+    border-radius: 8px; /* Bordes redondeados para suavidad */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Sombra sutil para profundidad */
+}
+
+.modal-header {
+    border-bottom: 1px solid #eaecef; /* Línea divisoria sutil */
+    background-color: #f8f9fa; /* Fondo ligeramente gris para el encabezado */
+    border-top-left-radius: 8px; /* Mantener el radio del borde en la parte superior */
+    border-top-right-radius: 8px;
+}
+
+.modal-title {
+    color: #333; /* Texto oscuro para mejor contraste */
+    font-weight: 500; /* Semi-negrita para el título */
+}
+
+.btn-close {
+    color: #6c757d; /* Botón de cierre con color suave */
+}
+
+.modal-body {
+    padding: 20px; /* Espaciado generoso para evitar la sensación de hacinamiento */
+}
